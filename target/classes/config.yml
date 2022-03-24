@@ -1,0 +1,16 @@
+# взносы
+start_castle_creation_fee: "netherite:4"
+castle_creation_fee_raising: "netherite:2;diamond:32"
+castle_maintenance_fee: "netherite:0.1"
+
+# сообщения об ошибках
+unknown_war_state: "&cНеизвестное государство %state%"
+this_war_state_is_neutral: "&cГосударство %state% - нейтрально, и ему нельзя объявить войну"
+free: "&cТы не состоишь ни в каком городе!"
+castle_already_created: "&cВ этом гексагоне уже построен замок!"
+this_command_is_in_dev: "&cЭтот функционал всё ещё находится в разработке. Ожидаемая дата релиза - %date%."
+
+
+# сообщения
+
+castle_create: "&6&lГосударства >> &fГород %name% возвёл замок %castle%"

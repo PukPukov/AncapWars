@@ -1,0 +1,13 @@
+main: Wars.AncapWars.AncapWars
+name: AncapWars
+version: beta-1.0
+
+commands:
+  war:
+    description:
+    permission:
+    usage: "Usage: /<command>"
+  castle:
+    description:
+    permission:
+    usage: "Usage: /<command>"
