@@ -50,7 +50,7 @@
 
         <repository>
             <id>AncapStates-mvn-repo</id>
-            <url>https://raw.github.com/PukPukov/AncapStates/mvn-repo/</url>
+            <url>https://raw.github.com/PukPukov/AncapStates-2/mvn-repo/</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>always</updatePolicy>
@@ -162,6 +162,7 @@
             <groupId>com.local</groupId>
             <artifactId>HexagonLibrary</artifactId>
             <version>1.0</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

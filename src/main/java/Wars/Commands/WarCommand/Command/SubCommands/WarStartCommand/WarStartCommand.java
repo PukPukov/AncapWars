@@ -1,26 +1,26 @@
-package Wars.Commands.WarCommand.Command.SubCommands.WarDeclareCommand;
+package Wars.Commands.WarCommand.Command.SubCommands.WarStartCommand;
 
 import AncapLibrary.Commands.AncapCommand;
 import AncapLibrary.Commands.AncapCommandException;
 import AncapLibrary.Library.AncapLibrary;
 import Wars.AncapWars.AncapWars;
+import Wars.WarHexagons.WarHexagon;
+import Wars.WarHexagons.WarHexagonStatus;
 import Wars.WarPlayers.AncapWarrior;
-import Wars.WarStates.WarState;
 
-public class WarDeclareCommand implements AncapCommand {
+public class WarStartCommand implements AncapCommand {
 
     private AncapWarrior warrior;
-    private WarState target;
 
-    public WarDeclareCommand(AncapWarrior warrior, WarState state) {
+    public WarStartCommand(AncapWarrior warrior) {
         this.warrior = warrior;
-        this.target = state;
     }
 
     @Override
     public void handle() {
         this.validate();
-        warrior.getHighestWarState().declareWar(target);
+        WarHexagon hexagon = warrior.getHexagon();
+        hexagon.startKostilBattle(warrior.getWarLocation());
     }
 
     private void validate() {
@@ -30,11 +30,8 @@ public class WarDeclareCommand implements AncapCommand {
         if (!warrior.canDeclareWars()) {
             throw new AncapCommandException(warrior, AncapLibrary.getConfiguration().getNoPermissionMessage());
         }
-        if (target.isNeutral()) {
-            throw new AncapCommandException(warrior, AncapWars.getConfiguration().getNeutralWarStateErrorMessage(target.getName()));
-        }
-        if (target.isInWarWith(warrior.getHighestWarState())) {
-            throw new AncapCommandException(warrior, AncapWars.getConfiguration().getAlreadyInWarMessage(target.getName()));
+        if (warrior.getHexagon().getStatus() == WarHexagonStatus.KOSTIL_PREBATTLE || warrior.getHexagon().getStatus() == WarHexagonStatus.SIEGE) {
+            throw new AncapCommandException(warrior, AncapLibrary.getConfiguration().getNoPermissionMessage());
         }
     }
 }

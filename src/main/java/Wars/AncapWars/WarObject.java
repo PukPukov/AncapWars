@@ -28,6 +28,7 @@ public interface WarObject {
                 if (parent == null) {
                     return object;
                 }
+                object = parent;
             } catch (WarObjectRangException e) {
                 return object;
             }

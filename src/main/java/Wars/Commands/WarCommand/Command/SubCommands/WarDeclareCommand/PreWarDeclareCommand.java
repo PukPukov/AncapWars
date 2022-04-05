@@ -24,7 +24,7 @@ public class PreWarDeclareCommand implements AncapPreCommand, WarStateTargeted {
     }
 
     private void validate() {
-        this.validateArgsCount(3);
+        this.validateArgsCount(2);
     }
 
     @Override

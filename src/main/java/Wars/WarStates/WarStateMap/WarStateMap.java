@@ -2,8 +2,7 @@ package Wars.WarStates.WarStateMap;
 
 import Database.Database;
 import Wars.AncapWars.WarAncapStatesIncompatibleError;
-import Wars.Building.Castle.Castle;
-import Wars.Location.StringPreWarLocation;
+import Wars.Building.Castle.CastleCore;
 import Wars.Location.WarLocation;
 import Wars.WarHexagons.WarHexagon;
 import Wars.WarStates.WarCities.WarCity;
@@ -22,29 +21,19 @@ public class WarStateMap {
     @Deprecated(forRemoval = true) // Удалить это после выпуска AncapStates 3
     private List<WarHexagon> hexagonList;
 
+    private List<CastleCore> coreList;
+
     public WarStateMap() {
         this.stateList = new ArrayList<>();
+        this.hexagonList = new ArrayList<>();
     }
 
     // Переписать на загрузку из сериализованного вида после завершения разработки AncapStates 3
     public void loadFromDb(Database database) {
         this.clear();
         this.loadWarStates(database);
-        this.loadHexagons(database);
-        this.loadCastles(database);
     }
 
-    @Deprecated (forRemoval = true)
-    private void loadCastles(Database database) {
-        String[] castles = database.getKeys("states.castle");
-        for (String castleName : castles) {
-            WarLocation location = new StringPreWarLocation(database.getString("states.castle."+castleName+".location")).getPreparedLocation();
-            String name = database.getString("states.castle."+castleName+".name");
-            Castle castle = new Castle(location, name);
-            WarHexagon hexagon = this.findWarHexagon(castle.getLocation().getHexagon().getQ(), castle.getLocation().getHexagon().getR());
-            hexagon.setCastle(castle);
-        }
-    }
 
     @Deprecated (forRemoval = true)
     private void loadHexagons(Database database) {
@@ -83,23 +72,23 @@ public class WarStateMap {
         throw new UnknownHexagonException("Unknown hexagon");
     }
 
-    public WarState findWarState(WarStateType type, String name) {
+    public WarState findWarState(WarStateType type, String name) throws UnknownWarStateException {
         for (WarState state : this.stateList) {
             if (state.getName().equalsIgnoreCase(name) && state.getType() == type) {
                 return state;
             }
         }
-        throw new UnknownWarStateException("Unknown "+type.name()+": "+name);
+        throw new UnknownWarStateException();
     }
 
-    public WarStateType findWarStateType(String typeName) {
+    public WarStateType findWarStateType(String typeName) throws UnknownWarStateTypeException {
         if (typeName.equals("city")) {
             return WarStateType.CITY;
         }
         if (typeName.equals("nation")) {
             return WarStateType.NATION;
         }
-        throw new UnknownWarStateTypeException("Cant find WarStateType for "+typeName);
+        throw new UnknownWarStateTypeException();
     }
 
     public List<WarState> getStateList() {
@@ -108,5 +97,24 @@ public class WarStateMap {
 
     public List<WarHexagon> getHexagonList() {
         return this.hexagonList;
+    }
+
+    public List<CastleCore> getCoreList() {
+        return this.coreList;
+    }
+
+    public CastleCore findCastleCore(WarLocation location) throws UnknownWarStateException {
+        for (CastleCore core : this.coreList) {
+            if (core.getLocation().blockEquals(location)) {
+                return core;
+            }
+        }
+        throw new UnknownWarStateException();
+    }
+
+    public void createCore(WarLocation location) {
+        CastleCore core = new CastleCore(location);
+        this.coreList.add(core);
+        core.place();
     }
 }

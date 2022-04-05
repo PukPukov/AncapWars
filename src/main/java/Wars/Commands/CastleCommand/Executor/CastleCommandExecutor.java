@@ -12,6 +12,9 @@ public class CastleCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+        if (true) {
+            return false;
+        }
         AncapWarrior warrior = new AncapWarrior(sender.getName());
         CastleCommand castleCommand = new CastleCommand(warrior, args);
         try {

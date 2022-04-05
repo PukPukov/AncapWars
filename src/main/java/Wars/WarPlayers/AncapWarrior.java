@@ -7,7 +7,6 @@ import Wars.ForbiddenStatementsManagers.ForbiddenStatementsThread;
 import Wars.Location.WarLocation;
 import Wars.WarHexagons.WarHexagon;
 import Wars.WarStates.WarCities.WarCity;
-import Wars.WarStates.WarState;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
@@ -17,8 +16,6 @@ import states.Player.AncapStatesPlayer;
 import java.util.List;
 
 public class AncapWarrior extends AncapStatesPlayer implements WarObject {
-
-    private WarState parent;
 
     @Deprecated
     public AncapWarrior(String string) {
@@ -114,10 +111,22 @@ public class AncapWarrior extends AncapStatesPlayer implements WarObject {
 
     @Override
     public WarObject getParentObject() {
-        return this.parent;
+        return this.getWarCity();
     }
 
+    // Переписать
     public WarCity getWarCity() {
-        return (WarCity) this.parent;
+        if (super.getCity() == null) {
+            return null;
+        }
+        return new WarCity(super.getCity().getID());
+    }
+
+    public boolean equals(AncapWarrior warrior) {
+        if (warrior == null) {
+            return false;
+        }
+        boolean b = warrior.getID().equals(this.getID());
+        return b;
     }
 }

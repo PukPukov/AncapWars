@@ -1,20 +1,21 @@
-package Wars.Events;
+package Wars.Events.CastleCoreDamageEvent;
 
-import Wars.Building.Castle.Castle;
+import Wars.Building.Castle.CastleCore;
 import Wars.WarPlayers.AncapWarrior;
+import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
-public class CastleCoreBreakEvent extends Event {
+public class CastleCoreDamageEvent extends Event {
 
     public static final HandlerList handlers = new HandlerList();
 
-    private Castle castle;
+    private CastleCore core;
     private AncapWarrior warrior;
 
-    public CastleCoreBreakEvent(Castle castle, AncapWarrior warrior) {
-        this.castle = castle;
+    public CastleCoreDamageEvent(CastleCore core, AncapWarrior warrior) {
+        this.core = core;
         this.warrior = warrior;
     }
 
@@ -28,12 +29,16 @@ public class CastleCoreBreakEvent extends Event {
         return handlers;
     }
 
-    public Castle getCastle() {
-        return this.castle;
+    public CastleCore getCore() {
+        return this.core;
     }
 
     public AncapWarrior getWarrior() {
         return this.warrior;
+    }
+
+    public void call() {
+        Bukkit.getPluginManager().callEvent(this);
     }
 
 }

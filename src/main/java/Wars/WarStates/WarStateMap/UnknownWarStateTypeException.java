@@ -1,8 +1,8 @@
 package Wars.WarStates.WarStateMap;
 
-public class UnknownWarStateTypeException extends RuntimeException {
+public class UnknownWarStateTypeException extends Exception {
 
-    public UnknownWarStateTypeException(String msg) {
-        super(msg);
+    public UnknownWarStateTypeException() {
+        super();
     }
 }

@@ -26,11 +26,6 @@ public class WarCity extends City implements WarState {
     }
 
     @Override
-    public void declareWar(WarState state) {
-
-    }
-
-    @Override
     public void offerPeace(WarState state) {
 
     }
@@ -105,7 +100,7 @@ public class WarCity extends City implements WarState {
         if (nation == null) {
             return  null;
         }
-        return (WarNation) AncapWars.getWarStateMap().findWarState(WarStateType.NATION, nation.getName());
+        return new WarNation(super.getNation().getID());
     }
 
     // Переименовать в getResidents после выхода AncapStates 3 (и переписать тоже)

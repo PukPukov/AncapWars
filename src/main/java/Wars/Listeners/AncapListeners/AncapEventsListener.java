@@ -14,10 +14,14 @@ public class AncapEventsListener implements Listener {
 
     @EventHandler
     public void onWorldInteract(AncapWorldInteractEvent e) {
-        this.callSubEvent(e);
+        this.callSubEvents(e);
     }
 
-    private void callSubEvent(AncapWorldInteractEvent e) {
+    private void callSubEvents(AncapWorldInteractEvent e) {
+        this.callWarWorldInteractEvent(e);
+    }
+
+    private void callWarWorldInteractEvent(AncapWorldInteractEvent e) {
         AncapPlayer player = e.getPlayer();
         AncapWarrior warrior = new AncapWarrior(player.getName());
         WarLocation location = warrior.getWarLocation();

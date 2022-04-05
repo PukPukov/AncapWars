@@ -3,17 +3,21 @@ package Wars.Location;
 import Wars.AncapWars.AncapWars;
 import Wars.Building.Castle.Castle;
 import Wars.Building.Castle.CastleAlreadyCreatedException;
+import Wars.Building.Castle.CastleCore;
+import Wars.Building.Castle.CastleNameAlreadyUsedException;
 import Wars.WarHexagons.WarHexagon;
+import library.Hexagon;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 
 public class WarLocation {
 
-    private String world;
+    private WarWorld world;
     private double x;
     private double y;
     private double z;
 
-    public WarLocation(String world, double x, double y, double z) {
+    public WarLocation(WarWorld world, double x, double y, double z) {
         this.world = world;
         this.x = x;
         this.y = y;
@@ -21,24 +25,28 @@ public class WarLocation {
     }
 
     public WarLocation(Location location) {
-        this.world = location.getWorld().getName();
+        this.world = new WarWorld(location);
         this.x = location.getX();
         this.y = location.getY();
         this.z = location.getZ();
     }
 
     public WarHexagon getHexagon() {
-        return new WarHexagon(AncapWars.getGrid().getHexagon(this));
+        Hexagon hex = AncapWars.getGrid().getHexagon(this);
+        return AncapWars.getWarStateMap().findWarHexagon(hex.getQ(), hex.getR());
     }
 
+    @Deprecated (forRemoval = true)
     public void createCastle(String name) {
         this.validateCastleCreation();
-        Castle castle = new Castle(this, name);
+        Castle castle = new Castle(name, new CastleCore(this));
         this.getHexagon().setCastle(castle);
-        castle.createPhysically();
     }
 
     public void validateCastleCreation() {
+        if (false) {
+            throw new CastleNameAlreadyUsedException();
+        }
         if (this.getHexagon().getCastle() != null) {
             throw new CastleAlreadyCreatedException("");
         }
@@ -60,7 +68,22 @@ public class WarLocation {
         return this.world+";"+this.x+";"+this.y+";"+this.z;
     }
 
-    public String getWorld() {
+    public WarWorld getWorld() {
         return this.world;
+    }
+
+    public Block getBlockAt() {
+        return this.world.getBlockAt(this);
+    }
+
+    public Location getBukkitLocation() {
+        return new Location(this.world.getBukkitWorld(), this.x, this.y, this.z);
+    }
+
+    public boolean blockEquals(WarLocation location) {
+        return location.world.equals(this.getWorld()) &&
+                ((int) location.x) == ((int) this.x) &&
+                ((int) location.y) == ((int) this.y) &&
+                ((int) location.z) == ((int) this.z);
     }
 }

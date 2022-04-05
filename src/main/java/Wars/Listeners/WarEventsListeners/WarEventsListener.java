@@ -1,7 +1,11 @@
 package Wars.Listeners.WarEventsListeners;
 
+import Wars.AncapWars.AncapWars;
 import Wars.Battle.FieldConflict.FieldConflict;
-import Wars.Events.*;
+import Wars.Events.CastleSiegeStartedEvent;
+import Wars.Events.WarHexagonStayEvent;
+import Wars.Events.WarWorldInteractEvent;
+import Wars.Events.WarriorHeartbeatEvent;
 import Wars.WarHexagons.WarHexagon;
 import Wars.WarHexagons.WarHexagonStatus;
 import Wars.WarPlayers.AncapWarrior;
@@ -10,6 +14,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.plugin.PluginManager;
+
+import java.util.Random;
 
 public class WarEventsListener implements Listener {
 
@@ -31,7 +37,20 @@ public class WarEventsListener implements Listener {
             case PEACE -> this.onPeaceStay(e);
             case FIELD_CONFLICT -> this.onFieldConflictStay(e);
             case SIEGE_PREPARE -> this.onSiegePrepareStay(e);
+            case KOSTIL_PREBATTLE -> this.onKostilPrebattle(e);
             case SIEGE -> this.onSiegeStay(e);
+        }
+    }
+
+    private void onKostilPrebattle(WarHexagonStayEvent e) {
+        Random random = new Random(System.currentTimeMillis());
+        // мне похуй что здесь говнище написано, я это всё равно удалю потом
+        if (random.nextBoolean()) {
+            if (random.nextBoolean()) {
+                if (random.nextBoolean()) {
+                    e.getWarrior().sendMessage(AncapWars.getConfiguration().getLeaveHexagonPleaseMessage());
+                }
+            }
         }
     }
 
@@ -112,12 +131,7 @@ public class WarEventsListener implements Listener {
     @EventHandler
     public void onSiegeStart(CastleSiegeStartedEvent e) {
         e.getCastle().spawnCore();
-        e.getCastle().getLocation().getHexagon().setStatus(WarHexagonStatus.SIEGE);
-    }
-
-    @EventHandler
-    public void onCastleCoreBreak(CastleCoreBreakEvent e) {
-        e.getCastle().getHealth().damage();
+        e.getCastle().getCore().getLocation().getHexagon().setStatus(WarHexagonStatus.SIEGE);
     }
 
 }

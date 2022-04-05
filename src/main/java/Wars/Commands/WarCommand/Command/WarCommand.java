@@ -5,9 +5,9 @@ import AncapLibrary.Commands.AncapCommandException;
 import AncapLibrary.Commands.AncapPreCommand;
 import AncapLibrary.Library.AncapLibrary;
 import AncapLibrary.Player.AncapPlayer;
-import Wars.AncapWars.AncapWars;
 import Wars.Commands.WarCommand.Command.SubCommands.PeaceOfferCommand.PrePeaceOfferCommand;
 import Wars.Commands.WarCommand.Command.SubCommands.WarDeclareCommand.PreWarDeclareCommand;
+import Wars.Commands.WarCommand.Command.SubCommands.WarStartCommand.PreWarStartCommand;
 import Wars.WarPlayers.AncapWarrior;
 
 import java.util.Collections;
@@ -36,16 +36,14 @@ public class WarCommand implements AncapCommand, AncapPreCommand {
         if (this.args[0].equals("peace")) {
             return new PrePeaceOfferCommand(this.warrior, this.args).getPreparedCommand();
         }
+        if (this.args[0].equals("start346")) {
+            return new PreWarStartCommand(this.warrior, this.args).getPreparedCommand();
+        }
         throw new AncapCommandException(this.warrior, AncapLibrary.getConfiguration().getInvalidArgMessage(args[0], Collections.singletonList("declare, peace")));
     }
 
     private void validate() {
-        this.validateDevEnd();
         this.validateArgsCount(1);
-    }
-
-    private void validateDevEnd() {
-        throw new AncapCommandException(warrior, AncapWars.getConfiguration().getCommandInDevMessage("27 марта"));
     }
 
     @Override

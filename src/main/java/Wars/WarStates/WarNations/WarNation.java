@@ -1,6 +1,7 @@
 package Wars.WarStates.WarNations;
 
 import Wars.AncapWars.WarObject;
+import Wars.AncapWars.WarObjectRangException;
 import Wars.WarPlayers.AncapWarrior;
 import Wars.WarStates.WarCities.WarCity;
 import Wars.WarStates.WarState;
@@ -70,6 +71,6 @@ public class WarNation extends Nation implements WarState {
 
     @Override
     public WarObject getParentObject() {
-        return null;
+        throw new WarObjectRangException("");
     }
 }
