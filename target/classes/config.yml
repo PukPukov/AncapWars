@@ -1,19 +1,24 @@
 # взносы
-start_castle_creation_fee: "netherite:4"
-castle_creation_fee_raising: "netherite:2;diamond:32"
-castle_maintenance_fee: "netherite:0.1"
+fees:
+  castle:
+    creation:
+      start:
+        netherite: 3
+      raising:
+        netherite: 0.25
 
-# сообщения об ошибках
-unknown_war_state: "&cНеизвестное государство %state%"
-this_war_state_is_neutral: "&cГосударство %state% - нейтрально, и ему нельзя объявить войну"
-free: "&cТы не состоишь ни в каком городе!"
-castle_already_created: "&cВ этом гексагоне уже построен замок!"
-this_command_is_in_dev: "&cЭтот функционал всё ещё находится в разработке. Ожидаемая дата релиза - %date%."
-not_enough_money: "&cНедостаточно денег"
-not_yours_city: "&cЭто не твой город"
-name_occupied: "&cЭто название уже занято"
-already_in_war: "&cТвоё государство уже находится в состоянии войны с %name%"
+hexagon:
+  health:
+    normal: 12000
+    debug: 25
 
-# сообщения
-castle_create: "&6&lГосударства >> &fГород %name% возвёл замок %castle%"
-war_declare_message: "&6&lГосударства >> &fГосударство %attacker% объявило войну государству %attacked%"
+castle:
+  assault:
+    time:
+      normal: 3600
+      debug: 30
+  core:
+    max-height: 172
+  health: 
+    normal: 100
+    debug: 3

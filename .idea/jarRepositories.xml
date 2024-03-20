@@ -2,9 +2,14 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
-      <option name="id" value="localrep" />
-      <option name="name" value="local repository" />
-      <option name="url" value="file:C:\сурцы\AncapWars/lib" />
+      <option name="id" value="MikeRepo" />
+      <option name="name" value="MikeRepo" />
+      <option name="url" value="https://repo.mikeprimm.com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="projectlombok.org" />
+      <option name="name" value="projectlombok.org" />
+      <option name="url" value="https://projectlombok.org/edge-releases" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -22,9 +27,14 @@
       <option name="url" value="https://jitpack.io" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="spigot-repo" />
-      <option name="name" value="spigot-repo" />
-      <option name="url" value="https://hub.spigotmc.org/nexus/content/repositories/snapshots/" />
+      <option name="id" value="placeholderapi" />
+      <option name="name" value="placeholderapi" />
+      <option name="url" value="https://repo.extendedclip.com/content/repositories/placeholderapi/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="localrep" />
+      <option name="name" value="local repository" />
+      <option name="url" value="file:D:\dev\sources\gameplay\AncapWars/lib" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
@@ -32,19 +42,54 @@
       <option name="url" value="https://repo1.maven.org/maven2" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="jboss.community" />
-      <option name="name" value="JBoss Community repository" />
-      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+      <option name="id" value="localrep" />
+      <option name="name" value="local repository" />
+      <option name="url" value="file:D:\projects\dev\sources\gameplay\AncapWars/lib" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="AncapStates-mvn-repo" />
-      <option name="name" value="AncapStates-mvn-repo" />
-      <option name="url" value="https://raw.github.com/PukPukov/AncapStates/mvn-repo/" />
+      <option name="id" value="papermc" />
+      <option name="name" value="papermc" />
+      <option name="url" value="https://repo.papermc.io/repository/maven-public/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="AncapDatabase-mvn-repo" />
       <option name="name" value="AncapDatabase-mvn-repo" />
       <option name="url" value="https://raw.github.com/PukPukov/AncapDatabase/mvn-repo/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="opencollab-snapshot" />
+      <option name="name" value="opencollab-snapshot" />
+      <option name="url" value="https://repo.opencollab.dev/maven-snapshots/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="localrep" />
+      <option name="name" value="local repository" />
+      <option name="url" value="file:D:\projects\dev\projects\gameplay\AncapWars/lib" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="ivan" />
+      <option name="name" value="ivan" />
+      <option name="url" value="https://repo.mrivanplays.com/repository/ivan/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="local-maven-repo" />
+      <option name="name" value="local-maven-repo" />
+      <option name="url" value="file:D:\dev\projects\sources\gameplay\AncapWars/lib" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="local-maven-repo" />
+      <option name="name" value="local-maven-repo" />
+      <option name="url" value="file:D:\dev\projects\sources\gameplay\logic\states\AncapWars/lib" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="localrep" />
+      <option name="name" value="local repository" />
+      <option name="url" value="file:D:\dev\projects\sources\gameplay\AncapWars/lib" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="AncapStates-mvn-repo" />
