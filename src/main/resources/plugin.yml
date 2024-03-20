@@ -1,17 +1,10 @@
-main: Wars.AncapWars.AncapWars
+main: ru.ancap.states.wars.AncapWars
 name: AncapWars
-version: beta-1.0
+version: '${project.version}'
 api-version: 1.16
 
 depend:
   - AncapStates
-
-commands:
-  war:
-    description:
-    permission:
-    usage: "Usage: /<command>"
-  castle:
-    description:
-    permission:
-    usage: "Usage: /<command>"
+  - Artifex
+  - PlaceholderAPI
+  - floodgate

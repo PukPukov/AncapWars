@@ -1,0 +1,5 @@
+package ru.ancap.states.wars.plugin.executor.exception;
+
+public class HexagonIsProtectedException extends Exception {
+
+}
