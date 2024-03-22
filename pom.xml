@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ru.ancap</groupId>
     <artifactId>AncapWars</artifactId>
-    <version>1.0</version>
+    <version>1.0.1</version>
 
     <properties>
         <java.version>21</java.version>
@@ -121,19 +121,16 @@
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.3.1</version>
                 <executions>
                     <execution>
                         <id>copy-resources</id>
-                        <phase>validate</phase>
-
+                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
-
                         <configuration>
-                            <outputDirectory>${basedir}</outputDirectory>
-
+                            <outputDirectory>${project.build.directory}/${project.build.finalName}</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>
