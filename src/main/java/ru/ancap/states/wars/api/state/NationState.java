@@ -19,6 +19,7 @@ import java.util.Objects;
 
 @AllArgsConstructor @Getter
 /*@EqualsAndHashCode уже реализовано*/ @ToString(callSuper = true)
+// нереализованные методы это баг IDE
 public class NationState extends WarState {
     
     @Delegate(excludes = {Exclude.Remove.class, Exclude.PrepareToDelete.class, Exclude.Delete.class, Exclude.GetDatabase.class})

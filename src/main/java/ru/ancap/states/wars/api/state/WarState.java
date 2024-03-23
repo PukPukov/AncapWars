@@ -346,7 +346,7 @@ public abstract class WarState {
     
     public List<WarHexagon> unprotectedBorderHexagons() {
         return this.territories().stream()
-            .filter(hex -> hex.getNeighbors().stream().anyMatch(neighbour -> !this.equals(neighbour.getOwner())))
+            .filter(hex -> hex.getNeighbors().stream().anyMatch(neighbour -> !this.equals(neighbour.getOwner().warActor())))
             .filter(hex -> hex.barrier() == null)
             .filter(hex -> hex.getNeighbors().stream().noneMatch(neighbour -> (this.containsHex(neighbour) && neighbour.castle() != null)))
             .toList();
