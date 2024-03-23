@@ -17,6 +17,7 @@ public class UnprotectedHexagonsNotification implements Listener {
         Warrior warrior = Warrior.get(event.getPlayer());
         var communicator = Communicator.of(event.getPlayer());
         var state = warrior.state();
+        if (state == null) return;
         var unprotected = state.unprotectedBorderHexagons();
         if (!unprotected.isEmpty()) Bukkit.getScheduler().runTaskLater(AncapWars.loaded(), () -> {
             if (warrior.ndatabase().readBoolean("notifyAboutBarrierLack").orElse(true)) communicator.message(new LAPIMessage(
