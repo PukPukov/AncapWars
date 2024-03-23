@@ -18,10 +18,12 @@ public class UnprotectedHexagonsNotification implements Listener {
         var communicator = Communicator.of(event.getPlayer());
         var state = warrior.state();
         var unprotected = state.unprotectedBorderHexagons();
-        if (!unprotected.isEmpty()) Bukkit.getScheduler().runTaskLater(AncapWars.loaded(), () -> { communicator.message(new LAPIMessage(
-            AncapWars.class, "barrier.lack.notification.text",
-            new Placeholder("amount", unprotected.size())
-        )); }, 30 * 20);
+        if (!unprotected.isEmpty()) Bukkit.getScheduler().runTaskLater(AncapWars.loaded(), () -> {
+            if (warrior.ndatabase().readBoolean("notifyAboutBarrierLack").orElse(true)) communicator.message(new LAPIMessage(
+                AncapWars.class, "barrier.lack.notification.text",
+                new Placeholder("amount", unprotected.size())
+            ));
+        }, 30 * 20);
     }
     
 }
