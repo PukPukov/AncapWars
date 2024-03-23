@@ -38,6 +38,7 @@ import java.util.Objects;
 
 @Getter 
 /*@EqualsAndHashCode уже реализовано*/ @ToString(callSuper = true)
+// нереализованные методы это баг IDE
 public class CityState extends WarState {
 
     @Delegate
@@ -53,7 +54,10 @@ public class CityState extends WarState {
     public void remove() {
         new CityDeleteEvent(this.city).callEvent();
     }
-
+    
+    /**
+     * Previously highestWarState()
+     */
     @Override
     public WarState warActor() {
         WarState nation = this.getWarNation();
