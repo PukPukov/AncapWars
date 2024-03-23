@@ -6,6 +6,9 @@ import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import ru.ancap.commons.aware.Aware;
+import ru.ancap.commons.aware.ContextAware;
+import ru.ancap.commons.aware.InsecureContextHandle;
 import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.communicator.Communicator;
 import ru.ancap.framework.database.nosql.PathDatabase;
@@ -344,11 +347,19 @@ public abstract class WarState {
         AncapWars.fieldConflicts().makeIncorporation(this, affiliate);
     }
     
+    /**
+     * Should be warActor().
+     */
+    @ContextAware(awareOf = Aware.STATE, handle = InsecureContextHandle.NO_HANDLE)
     public List<WarHexagon> unprotectedBorderHexagons() {
         return this.territories().stream()
-            .filter(hex -> hex.getNeighbors().stream().anyMatch(neighbour -> !this.equals(neighbour.getOwner().warActor())))
+            .filter(hex -> hex.getNeighbours().stream().anyMatch(neighbour -> {
+                var neighbourOwner = neighbour.getOwner();
+                if (neighbourOwner == null) return true;
+                return !this.equals(neighbourOwner.warActor());
+            }))
             .filter(hex -> hex.barrier() == null)
-            .filter(hex -> hex.getNeighbors().stream().noneMatch(neighbour -> (this.containsHex(neighbour) && neighbour.castle() != null)))
+            .filter(hex -> hex.getNeighbours().stream().noneMatch(neighbour -> (this.containsHex(neighbour) && neighbour.castle() != null)))
             .toList();
     }
     

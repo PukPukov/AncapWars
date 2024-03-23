@@ -92,7 +92,7 @@ public class WarHexagon {
         WarState owner = this.getOwner();
         if (owner == null) return false;
         if (attacker.containsHex(this)) return false;
-        List<WarHexagon> apis = this.getNeighbors().stream()
+        List<WarHexagon> apis = this.getNeighbours().stream()
             .map(hex -> new WarHexagon(hex.code())).toList();
         int enemies = 0;
         for (WarHexagon neighbourHexagonApi : apis) {
@@ -125,11 +125,11 @@ public class WarHexagon {
     }
 
     public boolean neighborOf(WarState state) {
-        for (WarHexagon hex : this.getNeighbors()) if (state.containsHex(hex)) return true;
+        for (WarHexagon hex : this.getNeighbours()) if (state.containsHex(hex)) return true;
         return false;
     }
 
-    public List<WarHexagon> getNeighbors() {
+    public List<WarHexagon> getNeighbours() {
         return this.hexagon.neighbors(1).stream()
                 .map(hex -> new WarHexagon(hex.code()))
                 .toList();
