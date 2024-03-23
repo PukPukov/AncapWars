@@ -58,7 +58,7 @@ public class WarHexagon {
         if (this.devastation() instanceof DevastationStatus.Normal) throw new NotDevastatedException();
         this.database.write("devastated.status", false);
     }
-
+    
     public @Nullable Castle castle() {
         String castleId = this.database.readString("castle");
         if (castleId != null) return new BuiltCastle(castleId);

@@ -27,6 +27,7 @@ import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
 import ru.ancap.states.wars.plugin.listener.AttackCounter;
 import ru.ancap.states.wars.plugin.listener.BridgeListener;
 import ru.ancap.states.wars.plugin.listener.WarListener;
+import ru.ancap.states.wars.spoonfeeding.UnprotectedHexagonsNotification;
 import ru.ancap.states.wars.war.process.restriction.WarMonitor;
 
 import java.util.List;
@@ -82,7 +83,7 @@ public class AncapWars extends AncapPlugin {
         AncapWars.loaded = this;
         this.loadLocales();
         AncapWars.database = ConfigurationDatabase.builder()
-            .autoSave(10L)
+            .autoSave(10000L)
             .plugin(this)
             .build();
         AncapWars.warMap = new WarMap();
@@ -105,6 +106,7 @@ public class AncapWars extends AncapPlugin {
             this.ancap().stepbackMaster()
         );
         this.registerEventsListener(AncapWars.warListener);
+        this.registerEventsListener(new UnprotectedHexagonsNotification());
         this.commandRegistrar().register("war",             new WarCommandExecutor());
         this.commandRegistrar().register("castle",          new CastleCommandExecutor());
         this.commandRegistrar().register("wars",            new WarsCommandExecutor());
@@ -134,14 +136,9 @@ public class AncapWars extends AncapPlugin {
 
     @Override
     public void onDisable() {
+        super.onDisable();
         AncapWars.database.close();
         Bukkit.getScheduler().cancelTasks(this);
-        this.commandRegistrar().unregister("war");
-        this.commandRegistrar().unregister("castle");
-        this.commandRegistrar().unregister("wars");
-        this.commandRegistrar().unregister("field-conflicts");
-        this.commandRegistrar().unregister("hexagon");
-        this.commandRegistrar().unregister("barrier");
     }
 
     private void loadScheduledTasks() {
