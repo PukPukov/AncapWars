@@ -33,7 +33,7 @@ ru:
             notification:
               text:
                 - "<red>В вашем государстве <u>%AMOUNT%</u> гексагонов, не защищённых укреплением.</red>"
-                - "  <gray><italic>Посмотреть список: <dark_gray>/barrier lack list</dark_gray></italic></gray>."
+                - "  <gray><italic>Посмотреть список: <dark_gray>/barrier lack</dark_gray></italic></gray>."
                 - "  <gray><italic>Отключить это оповещение: <dark_gray>/barrier lack notifications toggle</dark_gray></italic></gray>."
               toggler-value: "оповещения о незащищённых гексагонах"  
           central:
