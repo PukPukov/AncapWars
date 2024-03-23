@@ -37,6 +37,7 @@ import ru.ancap.states.wars.debug.Debugger;
 import ru.ancap.states.wars.id.WarID;
 import ru.ancap.states.wars.plugin.executor.exception.*;
 import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
+import ru.ancap.states.wars.utils.NPathDatabase;
 
 import javax.naming.InvalidNameException;
 import javax.naming.NameAlreadyBoundException;
@@ -270,6 +271,10 @@ public class Warrior {
 
     public boolean canManageWarsOf(WarState warState) {
         return warState.leader().equals(this);
+    }
+    
+    public NPathDatabase ndatabase() {
+        return NPathDatabase.of(this.database());
     }
     
 }
