@@ -28,11 +28,11 @@ ru:
           lack: 
             zero: "<green>В вашем государстве все пограничные гексагоны защищены укреплением."
             amount:
-              - "<red>В вашем государстве <u>%AMOUNT%<\u> пограничных гексагонов, не защищённых укреплением:"
+              - "<red>В вашем государстве <u>%AMOUNT%</u> пограничных гексагонов, не защищённых укреплением:"
               - "%COORDINATES%"
             notification:
               text:
-                - "<red>В вашем государстве <u>%AMOUNT%<\u> гексагонов, не защищённых укреплением.</red>"
+                - "<red>В вашем государстве <u>%AMOUNT%</u> гексагонов, не защищённых укреплением.</red>"
                 - "  <gray><italic>Посмотреть список: <dark_gray>/barrier lack list</dark_gray></italic></gray>."
                 - "  <gray><italic>Отключить это оповещение: <dark_gray>/barrier lack notifications toggle</dark_gray></italic></gray>."
               toggler-value: "оповещения о незащищённых гексагонах"  
