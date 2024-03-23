@@ -64,10 +64,11 @@ public class FieldConflictsCommandExecutor extends CommandTarget {
             ),
             new SubCommand(
                 new StringDelegatePattern("notifications"),
-                new CommandToggler(
+                new PersonalCommandToggler(
                     new LAPIMessage(AncapWars.class, "field-conflicts.toggler.notify-status"),
-                    sender -> Warrior.get((Player) sender).NAFC(),
-                    (sender, boolean_) -> Warrior.get((Player) sender).NAFC(boolean_)
+                    "notifyAboutFieldConflicts",
+                    true,
+                    sender -> Warrior.get((Player) sender).database()
                 )
             )
         ));

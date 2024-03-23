@@ -47,7 +47,8 @@ public class AttackCounter {
     }
     
     public void notifyAboutAttack(Player player, WarState attacker, WarHexagon hexagon) {
-        if (!Warrior.get(player).NAFC()) return;
+        var nafc = Warrior.get(player).database().readBoolean("notifyAboutFieldConflicts");
+        if (nafc != null && !nafc) return;
         this.attackHistory.get(Identifier.of(player)).mark(new Pair<>(attacker, hexagon));
     }
     

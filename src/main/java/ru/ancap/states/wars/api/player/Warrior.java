@@ -3,6 +3,7 @@ package ru.ancap.states.wars.api.player;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Delegate;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.communicator.Communicator;
@@ -51,26 +52,31 @@ public class Warrior {
     private final AncapStatesPlayer player;
     private final PathDatabase database;
     
+    @NotNull
     public static Warrior get(Player player) {
         AncapStatesPlayer states = AncapStatesPlayer.get(player);
         return new Warrior(states, Warrior.databaseFor(states));
     }
-
+    
+    @NotNull
     public static Warrior link(String id) {
         AncapStatesPlayer states = AncapStatesPlayer.link(id);
         return new Warrior(states, Warrior.databaseFor(states));
     }
     
+    @NotNull
     public static Warrior findByName(String name) throws PlayerNotFoundException {
         AncapStatesPlayer states = AncapStatesPlayer.findByName(name);
         return new Warrior(states, Warrior.databaseFor(states));
     }
-
+    
+    @NotNull
     public static Warrior findByNameFor(String name, Warrior caller) {
         AncapStatesPlayer states = AncapStatesPlayer.findByNameFor(name, caller.player);
         return new Warrior(states, Warrior.databaseFor(states));
     }
     
+    @NotNull
     public static Warrior findByID(String id) {
         AncapStatesPlayer states = AncapStatesPlayer.findByID(id);
         return new Warrior(states, Warrior.databaseFor(states));
@@ -264,22 +270,6 @@ public class Warrior {
 
     public boolean canManageWarsOf(WarState warState) {
         return warState.leader().equals(this);
-    }
-
-    /**
-     * notifyAboutFieldConflicts
-     */
-    public boolean NAFC() {
-        @Nullable Boolean boolean_ = this.database.readBoolean("nafc");
-        if (boolean_ == null) return true;
-        return boolean_;
-    }
-
-    /**
-     * notifyAboutFieldConflicts
-     */
-    public void NAFC(boolean nafc) {
-        this.database.write("nafc", nafc);
     }
     
 }

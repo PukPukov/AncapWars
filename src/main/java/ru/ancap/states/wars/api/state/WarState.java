@@ -341,7 +341,14 @@ public abstract class WarState {
             .map(war -> war.viewAs(this.id()))
             .forEach(view -> view.transferTo(affiliate));
         AncapWars.assaults().makeIncorporation(this, affiliate);
-        AncapWars.fieldConflicts() .makeIncorporation(this, affiliate);
+        AncapWars.fieldConflicts().makeIncorporation(this, affiliate);
+    }
+    
+    public List<WarHexagon> unprotectedBorderHexagons() {
+        return this.territories().stream()
+            .filter(hex -> hex.barrier() == null)
+            .filter(hex -> hex.getNeighbors().stream().noneMatch(neighbour -> neighbour.castle() != null))
+            .toList();
     }
     
 }
