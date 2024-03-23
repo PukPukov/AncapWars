@@ -1,5 +1,6 @@
 package ru.ancap.states.wars.spoonfeeding;
 
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -17,12 +18,10 @@ public class UnprotectedHexagonsNotification implements Listener {
         var communicator = Communicator.of(event.getPlayer());
         var state = warrior.state();
         var unprotected = state.unprotectedBorderHexagons();
-        if (!unprotected.isEmpty()) {
-            communicator.message(new LAPIMessage(
-                AncapWars.class, "barrier.lack.notification.text",
-                new Placeholder("amount", unprotected.size())
-            ));
-        }
+        if (!unprotected.isEmpty()) Bukkit.getScheduler().runTaskLater(AncapWars.loaded(), () -> { communicator.message(new LAPIMessage(
+            AncapWars.class, "barrier.lack.notification.text",
+            new Placeholder("amount", unprotected.size())
+        )); }, 30 * 20);
     }
     
 }
