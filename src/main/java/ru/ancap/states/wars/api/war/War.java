@@ -138,6 +138,20 @@ public class War {
     }
     
     @AllArgsConstructor
+    public static class MergeStrategy implements WarEndStrategy {
+        
+        private final War mergedInto;
+        
+        @Override
+        public void apply(War war) {
+            war.database.write("active", false);
+            war.database.write("status", "merged");
+            war.database.write("merged-into", this.mergedInto.getId());
+        }
+        
+    }
+    
+    @AllArgsConstructor
     public static class DefeatStrategy implements WarEndStrategy {
         
         private final WarState winner;
