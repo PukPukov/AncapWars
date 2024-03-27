@@ -39,7 +39,6 @@ public class DatabaseRequester implements Requester {
                 section.readString("target"),
                 new RequestState(section.readString("terms"))))
             .toList();
-        AncapDebug.debug(list);
         return list;
     }
     

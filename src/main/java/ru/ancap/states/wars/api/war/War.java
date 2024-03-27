@@ -102,7 +102,7 @@ public class War {
         });
     }
 
-    public void end(WarEndStrategy strategy) {
+    private void end(WarEndStrategy strategy) {
         strategy.apply(this);
     }
 

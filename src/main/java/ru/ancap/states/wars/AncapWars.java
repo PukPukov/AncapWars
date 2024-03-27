@@ -2,7 +2,6 @@ package ru.ancap.states.wars;
 
 import com.mrivanplays.conversations.spigot.BukkitConversationManager;
 import org.bukkit.Bukkit;
-import ru.ancap.commons.debug.AncapDebug;
 import ru.ancap.framework.communicate.modifier.Placeholder;
 import ru.ancap.framework.database.nosql.ConfigurationDatabase;
 import ru.ancap.framework.database.nosql.PathDatabase;
@@ -144,11 +143,8 @@ public class AncapWars extends AncapPlugin {
     private void loadScheduledTasks() {
         warMap().barriers().stream()
             .map(Barrier::attackWait)
-            .peek(wait -> AncapDebug.debug("1 "+ wait.assaultID(), wait.getTime()))
             .filter(assault -> assault.getTime() != null)
-            .peek(wait -> AncapDebug.debug("2 "+ wait.assaultID(), wait.getTime()))
             .filter(assault -> assault.getTime() > System.currentTimeMillis())
-            .peek(wait -> AncapDebug.debug("3 "+ wait.assaultID(), wait.getTime()))
             .forEach(assault -> new AttackDeclareLoadEvent(assault).callEvent());
     }
 
