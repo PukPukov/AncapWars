@@ -1,0 +1,199 @@
+language: ru
+version: 6
+
+ru:
+  ancap:
+    types:
+    
+    states:
+      
+      info:
+        here:
+          values:
+            hexagon-location: "Hexagon coordinates"
+            hexagon-code: "Hexagon code"
+            assault-status: "Assault status"
+            castle: "Castle"
+            attacker: "Attacker"
+            core-barrier-broken: "Core destroyed"
+      
+      wars:
+        
+        # modern
+        info:
+          broken:
+            yes_: "<red>yes"
+            no_: "<green>no"
+        barrier:
+          lack:
+            zero: "<green>All border hexagons in your state are protected by a fortification.</green>"
+            amount:
+              - "<red>Your state has <u>%AMOUNT%</u> border hexagons unprotected by a fortification:"
+              - "%COORDINATES%"
+            notification:
+              text:
+                - "<red>Your state has <u>%AMOUNT%</u> hexagons unprotected by a fortification.</red>"
+                - "  <gray><italic>View list: <dark_gray>/barrier lack</dark_gray></italic></gray>."
+                - "  <gray><italic>Disable this notification: <dark_gray>/barrier lack notifications toggle</dark_gray></italic></gray>."
+              toggler-value: "notifications about unprotected hexagons"
+          central:
+            scheduled-attack: "%ATTACKER% attacks the core of %DEFENDER%. The decisive battle will be tomorrow at six o'clock Moscow time."
+            attack: "%ATTACKER% attacks the core of %DEFENDER%."
+          attack:
+            at-invalid-time: "<green>You are attacking the fortification outside the allowed time thanks to having the right <u>ru.ancap.states.wars.barrier.attack.at-invalid-time</u></green>"
+        fees:
+          castle-creation: "Castle creation: %FEE%"
+          castle-attack: "Castle assault: %FEE%"
+          devastation-repayment: "Recovery from ruin: %FEE%"
+          core-barrier-attack: "Central fortification assault: %FEE%"
+        name-already-bound: "<red>This name is already taken!</red>"
+        leave-prepared-hexagon: "<red>Immediately leave the combat preparation area</red>"
+        toggler:
+          toggled: "<green>Status %VALUE% now set to <u>%STATUS%</u>.</green>"
+          represent: "<green>Status %VALUE%: <u>%STATUS%</u></green>"
+        state:
+          you-are-free: "<red>You are not part of any state.</red>"
+          cant-affiliate-because-of-not-allowed-war-transfer: "<red>You cannot initiate the integration of %SUBJECT% into %AFFILIATE%, because %SUBJECT% is in a state of war, and you do not have the rights to transfer wars of the state %AFFILIATE%.</red>"
+        assault:
+          declare: "§l§9[§1§l🗡§l§9] §fThe state §f§n%ATTACKER%§f attacks the castle §f§n%NAME%§f of the state §f§n%DEFENDER%§f. The assault will begin tomorrow at six o'clock in the evening Moscow time."
+          bossbar: "%CASTLE_NAME%"
+          status:
+            peace: "peace"
+            prepare: "preparing for assault"
+            war: "assault"
+        
+        field-conflicts:
+          toggler:
+            notify-status: "notifications of attacks on hexagons"
+        hexagon:
+          coordinates: "[<u>%X%</u>; <u>%Z%</u>]"
+          not-devastated: "<red>This hexagon is quite fine as it is, no need to restore it.</red>"
+          devastated: "<red>This hexagon is in a state of ruin, nothing can be built here. First restore it using <u>/hexagon rebuild</u>.</red>"
+          cant-change-owner-at-war: "<red>It is impossible to change the owner of a hexagon that is in a state of combat.</red>"
+        castle:
+          unstable-build: "<red>Impossible to build a castle in a hexagon that is in a state of combat. First, repel the attack!</red>"
+        
+        # legacy
+        
+        messages:
+          minecraft:
+            errors:
+              command:
+                war-name-already-bound: "§cA war with this name already exists."
+                not-a-state-type: "§c%INPUT% is not a state type."
+                not-a-state: "§c%INPUT% is not a state name."
+                not-enough-money: "<red>You don't have enough money.</red>"
+              dev:
+                command: "§cThis command is under development. Ask PukPukov personally in Discord/Telegram/VK about the implementation dates."
+              permission:
+                lack: "§cYou do not have enough rights to perform this action."
+              request:
+                already-sent: "§cThe request has already been sent"
+                not-sent: "§cThe request was not sent anyway"
+              state:
+                free: "§cYou are not part of any state."
+                neutral: "§cThe state you are trying to declare war on is neutral."
+                already-in-war: "§cYour state is already in a state of war with this state."
+                not-in-war: "§cYour state is not in a state of war with this state."
+                not-enough-money: "§cYour state does not have enough money."
+                cant-declare-yourself: "§cIdiot, you are trying to declare war on yourself."
+                cant-declare-ally: "§cThe state you are trying to declare war on is your ally."
+              war:
+                bedrock: "§cBedrock players cannot participate in battles. If you really want to participate — download POJAV LAUNCHER."
+              castle:
+                name:
+                  not-found: "§cA castle with the name %NAME% does not exist!"
+                  occupied: "§cThis castle name is already taken."
+                hexagon:
+                  already-built: "§cA castle has already been built in this hexagon."
+              barrier:
+                hexagon:
+                  no-barrier: "§cThere is no fortification in this hexagon."
+                  protected: "§cYou cannot attack this fortification, as it is deep within the state."
+                penalty: "<red>You cannot attack this fortification, as your state has a penalty.</red>"
+                attack:
+                  attacked: "§cYou are trying to attack a fortification that is already under attack."
+                  time:
+                    invalid: "§cDeclaring an assault on fortifications is only possible from 8:00 AM to 6:00 PM Moscow time."
+              name:
+                invalid: "§cThe name \"%NAME%\" is invalid. Only letters of the Russian and English alphabet, numbers, hyphens, and underscores can be used."
+            command:
+              war:
+                declare:
+                  conversation:
+                    type: "§f§6Type in chat the type of state you are declaring war on (\"nation\" or \"city\")."
+                    target: "§f§6Enter in chat the name of the state you are declaring war on."
+                    name: "§f§6Enter in chat the name of your war (for example, The Third Russo-Turkish War). Choose the name carefully — it will not be possible to change it in the future."
+                    reason: "§f§6Enter in chat the reason for the war (for example, oppression of national minorities)."
+                peace:
+                  conversation:
+                    terms: "§6Enter in chat the terms on which you propose to make peace (for example, \"Germany to pay reparations to France\")."
+              wars:
+                list:
+                  topic: "List of wars of the state %STATE%"
+                  entry: "— %WAR%"
+                debug:
+                  toggle: "Debug status was successfully toggled to <green>%STATUS%</green>."
+                  status: "Debug status: <green>%STATUS%</green>"
+            notify:
+              castle:
+                found: "§l§9[§1§l🗡§l§9] >> §f§n%PLAYER%§f has erected a castle §f§n%NAME%§f."
+              assault:
+                declare: "§l§9[§1§l🗡§l§9] §fThe state §f§n%STATE%§f attacks your castle §f§n%NAME%§f. The assault will begin tomorrow at six o'clock in the evening Moscow time."
+                you_declared: "§l§9[§1§l🗡§l§9] §fYour state attacks the castle §f§n%NAME%§f of the state §f§n%STATE%§f. The assault will begin tomorrow at six o'clock in the evening Moscow time."
+                start: "§l§9[§1§l🗡§l§9] >> §fThe state §f§n%STATE%§f begins the assault on the castle §f§n%NAME%§f, belonging to §f§n%TARGET%§f."
+                repulse: "§l§9[§1§l🗡§l§9] >> §fThe state §f§n%STATE%§f has repelled the attack of the state §f§n%ATTACKER%§f on the castle §f§n%NAME%§f."
+                destroy: "§l§9[§1§l🗡§l§9] >> §fThe castle §f§n%NAME%§f was destroyed by the state §f§n%STATE%§f."
+              hexagon:
+                occupy: "§l§9[§1§l🗡§l§9] >> §fThe state §f§n%OCCUPIER%§f has occupied the hexagon of the state §f§n%LOSER%§f at coordinates §f§n%COORDINATES%§f."
+              war:
+                penalty:
+                  get: "§cYour state has received a penalty for %TIME% hours!"
+                start:
+                  declare: "§l§9[§1§l🗡§l§9] >> §fThe state §f§n%ATTACKER%§f has declared war on the state §f§n%TARGET%§f for the reason \"§f§n%REASON%§f\"."
+                stop:
+                  death: "§l§9[§1§l🗡§l§9] >> §fThe war of your state with the state §f§n%STATE%§f has ended due to its cessation of existence."
+                  peace: "§l§9[§1§l🗡§l§9] >> §fThe war of your state with the state §f§n%STATE%§f has ended due to the signing of a peace agreement on the following terms: \"§f§n%TERMS%§f\"."
+                peace:
+                  request:
+                    offer:
+                      you: "§l§9[§1§l🗡§l§9] >> §fYour state has sent a proposal to the state §f§n%STATE%§f to make peace on the following terms: \"§f§n%TERMS%§f\"."
+                      to-you: "§l§9[§1§l🗡§l§9] >> §f§n%STATE%§f proposes to you to cease military actions on the following terms: \"§f§n%TERMS%§f\"."
+                    revoke:
+                      you: "§l§9[§1§l🗡§l§9] >> §fYour state has withdrawn its peace proposal to the state §f§n%STATE%§f."
+                    reject:
+                      you: "§l§9[§1§l🗡§l§9] >> §fYour state has rejected the peace proposal of the state §f§n%STATE%§f."
+                      yours: "§l§9[§1§l🗡§l§9] >> §fThe state §f§n%STATE%§f is not willing to make peace on the proposed terms."
+            attention:
+              field:
+                soon: "§cCaution! Combat actions will soon begin here."
+                attack:
+                  single: "§cA hexagon of your state at coordinates %COORDINATES% is under attack by the state %STATE%."
+                  multiple: "&cSeveral hexagons of your state are under attack. Enter the command &n/field-conflicts status&c for more detailed information."
+                  status:
+                    no-attack: "<green>All quiet! Your motherland is not being bombed yet.</green>"
+                    some-under-attack:
+                      - "§l§9[§1§l🗡§l§9]&r Combat actions in hexagons:"
+                      - "%ATTACKED_LIST%"
+                      - "<red>[!]</red> — hexagon currently under attack"
+                    attacked-format: "%ATTACKER% >>> %ATTACKED_HEXAGON_COORDINATES% <gray>[%PROGRESS_BAR%]</gray> %CURRENTLY_UNDER_ATTACK%"
+                    hexagon-coordinates-format: "[<u>%X%</u>; <u>%Z%</u>]"
+            info:
+              field-conflict:
+                boss-bar:
+                  name: "Occupation %PERCENTAGE%%"
+              assault:
+                core:
+                  boss-bar:
+                    distance: "%DISTANCE% blocks to the heart of the castle"
+          external:
+            notify:
+              war:
+                declare: "The state %ATTACKER% has declared war on you."
+              assault:
+                declare: "The state %ATTACKER% attacks your castle %CASTLE%. The assault will begin tomorrow at six o'clock in the evening Moscow time."
+                start: "The state %ATTACKER% begins the assault on your castle %CASTLE%."
+                repulse: "Your state has repelled the attack on castle %CASTLE%."
+                destroy: "Your castle %CASTLE% was destroyed by the state %STATE%."
+              hexagon:
+                occupy: "The state %ATTACKER% has occupied your hexagon at coordinates %COORDINATES%."
