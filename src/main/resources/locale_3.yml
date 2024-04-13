@@ -15,7 +15,7 @@ ru:
             assault-status: "Статус штурма"
             castle: "Замок"
             attacker: "Атакующий"
-            core-barrier-broken: "Сердце разрушено"
+            core-barrier-broken: "Центральное укрепление разрушено"
       
       wars:
         
@@ -37,8 +37,8 @@ ru:
                 - "  <gray><italic>Отключить это уведомление: <dark_gray>/barrier lack notifications toggle</dark_gray></italic></gray>."
               toggler-value: "уведомления о незащищённых гексагонах"
           central:
-            scheduled-attack: "%ATTACKER% направляет удар на сердце %DEFENDER%. Решающая схватка состоится завтра в шесть часов вечера по МСК."
-            attack: "%ATTACKER% нападает на сердце %DEFENDER%."
+            scheduled-attack: "%ATTACKER% направляет удар на центральное укрепление %DEFENDER%. Решающая схватка состоится завтра в шесть часов вечера по МСК."
+            attack: "%ATTACKER% нападает на центральное укрепление %DEFENDER%."
           attack:
             at-invalid-time: "<green>Вы пытаетесь атаковать укрепление слишком поздно, но у вас есть привилегия <u>ru.ancap.states.wars.barrier.attack.at-invalid-time</u></green>"
         fees:
