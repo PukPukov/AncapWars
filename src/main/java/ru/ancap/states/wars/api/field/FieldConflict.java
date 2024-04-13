@@ -4,7 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import ru.ancap.states.wars.api.hexagon.WarHexagon;
 import ru.ancap.states.wars.api.state.WarState;
-import ru.ancap.states.wars.plugin.executor.Part;
+import ru.ancap.states.wars.plugin.executor.util.Part;
 
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;

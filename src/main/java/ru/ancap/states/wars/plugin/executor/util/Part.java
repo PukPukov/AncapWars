@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.plugin.executor;
+package ru.ancap.states.wars.plugin.executor.util;
 
 public class Part {
     

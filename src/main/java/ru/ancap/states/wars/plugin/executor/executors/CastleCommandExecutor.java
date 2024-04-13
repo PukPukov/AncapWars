@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.plugin.executor;
+package ru.ancap.states.wars.plugin.executor.executors;
 
 import org.bukkit.entity.Player;
 import ru.ancap.framework.command.api.commands.CommandTarget;

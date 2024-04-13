@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.plugin.executor;
+package ru.ancap.states.wars.plugin.executor.executors;
 
 import com.mrivanplays.conversations.base.question.Question;
 import net.kyori.adventure.text.Component;

@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.plugin.executor;
+package ru.ancap.states.wars.plugin.executor.executors;
 
 import org.bukkit.entity.Player;
 import ru.ancap.framework.command.api.commands.CommandTarget;
@@ -13,6 +13,10 @@ import ru.ancap.states.wars.api.field.FieldConflict;
 import ru.ancap.states.wars.api.field.FieldConflicts;
 import ru.ancap.states.wars.api.player.Warrior;
 import ru.ancap.states.wars.api.state.WarState;
+import ru.ancap.states.wars.plugin.executor.util.HexagonCoordinates;
+import ru.ancap.states.wars.plugin.executor.util.Indicator;
+import ru.ancap.states.wars.plugin.executor.PersonalCommandToggler;
+import ru.ancap.states.wars.plugin.executor.util.ProgressBar;
 import ru.ancap.states.wars.plugin.listener.ChatBook;
 
 import java.util.ArrayList;
