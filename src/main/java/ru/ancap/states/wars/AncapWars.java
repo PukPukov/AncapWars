@@ -21,7 +21,7 @@ import ru.ancap.states.wars.messaging.info.HereInfoAddon;
 import ru.ancap.states.wars.papi.LAPIPAPI;
 import ru.ancap.states.wars.plugin.WarMap;
 import ru.ancap.states.wars.plugin.config.WarConfig;
-import ru.ancap.states.wars.plugin.executor.*;
+import ru.ancap.states.wars.plugin.executor.executors.*;
 import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
 import ru.ancap.states.wars.plugin.listener.AttackCounter;
 import ru.ancap.states.wars.plugin.listener.BridgeListener;
@@ -106,6 +106,7 @@ public class AncapWars extends AncapPlugin {
         );
         this.registerEventsListener(AncapWars.warListener);
         this.registerEventsListener(new UnprotectedHexagonsNotification());
+        this.commandRegistrar().register("ancap-wars",      new AncapWarsInput(this.localeHandle()));
         this.commandRegistrar().register("war",             new WarCommandExecutor());
         this.commandRegistrar().register("castle",          new CastleCommandExecutor());
         this.commandRegistrar().register("wars",            new WarsCommandExecutor());

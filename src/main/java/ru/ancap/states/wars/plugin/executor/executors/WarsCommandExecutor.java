@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.plugin.executor;
+package ru.ancap.states.wars.plugin.executor.executors;
 
 import lombok.SneakyThrows;
 import net.kyori.adventure.key.Key;
@@ -31,6 +31,7 @@ import ru.ancap.states.wars.api.state.WarState;
 import ru.ancap.states.wars.api.war.WarData;
 import ru.ancap.states.wars.api.war.WarView;
 import ru.ancap.states.wars.connector.StateType;
+import ru.ancap.states.wars.plugin.executor.util.StateTypeConverter;
 
 import java.util.ArrayList;
 import java.util.List;

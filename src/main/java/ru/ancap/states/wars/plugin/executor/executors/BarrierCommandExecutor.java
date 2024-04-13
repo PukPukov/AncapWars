@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.plugin.executor;
+package ru.ancap.states.wars.plugin.executor.executors;
 
 import org.bukkit.entity.Player;
 import ru.ancap.framework.command.api.commands.CommandTarget;
@@ -13,6 +13,7 @@ import ru.ancap.framework.language.additional.LAPIMessage;
 import ru.ancap.misc.money.exception.NotEnoughMoneyException;
 import ru.ancap.states.wars.AncapWars;
 import ru.ancap.states.wars.api.player.Warrior;
+import ru.ancap.states.wars.plugin.executor.util.HexagonCoordinates;
 import ru.ancap.states.wars.plugin.executor.exception.*;
 import ru.ancap.states.wars.spoonfeeding.UnprotectedHexagonsNotificationToggler;
 

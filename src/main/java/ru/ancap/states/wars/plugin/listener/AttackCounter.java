@@ -17,7 +17,7 @@ import ru.ancap.states.wars.AncapWars;
 import ru.ancap.states.wars.api.hexagon.WarHexagon;
 import ru.ancap.states.wars.api.player.Warrior;
 import ru.ancap.states.wars.api.state.WarState;
-import ru.ancap.states.wars.plugin.executor.HexagonCoordinates;
+import ru.ancap.states.wars.plugin.executor.util.HexagonCoordinates;
 
 import java.util.List;
 import java.util.Map;
