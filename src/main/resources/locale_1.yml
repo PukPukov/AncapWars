@@ -178,22 +178,22 @@ ru:
                       - "<red>[!]</red> — гексагон зараз під атакою"
                     attacked-format: "%ATTACKER% >>> %ATTACKED_HEXAGON_COORDINATES% <gray>[%PROGRESS_BAR%]</gray> %CURRENTLY_UNDER_ATTACK%"
                     hexagon-coordinates-format: "[<u>%X%</u>; <u>%Z%</u>]"
-              info:
-                field-conflict:
+            info:
+              field-conflict:
+                boss-bar:
+                  name: "Окупація %PERCENTAGE%%"
+              assault:
+                core:
                   boss-bar:
-                    name: "Окупація %PERCENTAGE%%"
-                assault:
-                  core:
-                    boss-bar:
-                      distance: "%DISTANCE% блоків до серця замку"
-              external:
-                notify:
-                  war:
-                    declare: "Держава %ATTACKER% оголосила вам війну."
-                  assault:
-                    declare: "Держава %ATTACKER% атакує ваш замок %CASTLE%. Штурм розпочнеться завтра о шість годин вечора за МСК."
-                    start: "Держава %ATTACKER% починає штурм вашого замку %CASTLE%."
-                    repulse: "Ваша держава відбила атаку на замок %CASTLE%."
-                    destroy: "Ваш замок %CASTLE% був зруйнований державою %STATE%."
-                  hexagon:
-                    occupy: "Держава %ATTACKER% окупувала ваш гексагон за координатами %COORDINATES%."
+                    distance: "%DISTANCE% блоків до серця замку"
+          external:
+            notify:
+              war:
+                declare: "Держава %ATTACKER% оголосила вам війну."
+              assault:
+                declare: "Держава %ATTACKER% атакує ваш замок %CASTLE%. Штурм розпочнеться завтра о шість годин вечора за МСК."
+                start: "Держава %ATTACKER% починає штурм вашого замку %CASTLE%."
+                repulse: "Ваша держава відбила атаку на замок %CASTLE%."
+                destroy: "Ваш замок %CASTLE% був зруйнований державою %STATE%."
+              hexagon:
+                occupy: "Держава %ATTACKER% окупувала ваш гексагон за координатами %COORDINATES%."
