@@ -1,7 +1,9 @@
 package ru.ancap.states.wars.plugin.listener;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import lombok.experimental.Accessors;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -69,6 +71,7 @@ import ru.ancap.states.wars.messaging.Sounds;
 import ru.ancap.states.wars.plugin.config.WarConfig;
 import ru.ancap.states.wars.utils.LAPIReceiver;
 import ru.ancap.states.wars.war.info.AssaultExecutor;
+import ru.ancap.states.wars.war.process.restriction.WarMonitor;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -80,21 +83,15 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 @RequiredArgsConstructor
+@Accessors(fluent = true) @Getter
 public class WarListener implements Listener {
 
     private final HexagonalGrid grid;
-    private final AssaultExecutor assaultExecutor;
-    private final FieldConflicts fieldConflicts;
-    private final Consumer<Player> prebattleMonitor;
+    private final AssaultExecutor assaults;
+    private final FieldConflicts field;
+    private final WarMonitor battleMonitor;
     private final AttackCounter attackCounter;
     private final StepbackMaster stepbackMaster;
-    
-    public HexagonalGrid    grid()             { return this.grid;             }
-    public AssaultExecutor  assaults()         { return this.assaultExecutor;  }
-    public FieldConflicts   field()            { return this.fieldConflicts;   }
-    public Consumer<Player> prebattleMonitor() { return this.prebattleMonitor; }
-    public AttackCounter    attackCounter()    { return this.attackCounter;    }
-    public StepbackMaster   stepbackMaster()   { return this.stepbackMaster;   }
 
     public final TriConsumer<WarState, WarState, WarHexagon> onOccupy = (loser, occupier, hexagon) -> {
         AncapDebug.debug("ON OCCUPY CALLED", loser, occupier, hexagon);
@@ -160,7 +157,7 @@ public class WarListener implements Listener {
                         BossBar.Overlay.NOTCHED_6
                     ));
                     player.sendActionBar(Component.text("Сердце замка находится в "+PrecisionFormatter.format(player.getLocation().distance(runtime.barrier().location()), 2)+" блоках"));
-                    this.prebattleMonitor().accept(player);
+                    this.battleMonitor().accept(player);
                 }
             } default -> BossBars.hide(player, 1);
         }
@@ -193,7 +190,7 @@ public class WarListener implements Listener {
     public void on(BlockPlaceEvent event) {
         Location location = event.getBlock().getLocation();
         long code = this.grid().hexagon(new Point(location.getX(), location.getZ())).code();
-        if (this.assaultExecutor.assault(code).type() == AssaultRuntimeType.WAR) {
+        if (this.assaults.assault(code).type() == AssaultRuntimeType.WAR) {
             if (location.getBlockY() > WarConfig.loaded().maxCastleHeight()) {
                 event.setCancelled(true);
             }
@@ -203,8 +200,8 @@ public class WarListener implements Listener {
     @EventHandler
     public void on(BlockBreakEvent event) {
         Location location = event.getBlock().getLocation();
-        if (this.assaultExecutor.isActiveCastleHeart(location)) {
-            this.assaultExecutor.hitHeart(event, location);
+        if (this.assaults.isActiveCastleHeart(location)) {
+            this.assaults.hitHeart(event, location);
             event.setCancelled(true);
         }
     }
@@ -214,7 +211,7 @@ public class WarListener implements Listener {
         if (event.consumed()) return;
         for (Location location : event.locations()) {
             long code = AncapStates.grid.hexagon(location).code();
-            if (!this.fieldConflicts.atFieldConflict(code) && this.assaultExecutor.assault(code).type() != AssaultRuntimeType.WAR) {
+            if (!this.field.atFieldConflict(code) && this.assaults.assault(code).type() != AssaultRuntimeType.WAR) {
                 return;
             }
         }
@@ -226,7 +223,7 @@ public class WarListener implements Listener {
         if (event.consumed()) return;
         for (Location location : event.passive()) {
             long code = AncapStates.grid.hexagon(location).code();
-            if (this.fieldConflicts.atFieldConflict(code) || this.assaultExecutor.assault(code).type() == AssaultRuntimeType.WAR) {
+            if (this.field.atFieldConflict(code) || this.assaults.assault(code).type() == AssaultRuntimeType.WAR) {
                 event.consume();
             }
         }
@@ -342,7 +339,7 @@ public class WarListener implements Listener {
 
     @EventHandler
     public void on(AttackDeclareLoadEvent event) {
-        this.assaultExecutor.acceptDeclareLoad(event.getAttackWait());
+        this.assaults.acceptDeclareLoad(event.getAttackWait());
     }
 
     @EventHandler

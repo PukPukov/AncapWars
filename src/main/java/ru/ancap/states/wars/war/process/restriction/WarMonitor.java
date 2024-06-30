@@ -1,5 +1,6 @@
 package ru.ancap.states.wars.war.process.restriction;
 
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -18,17 +19,20 @@ public class WarMonitor implements Consumer<Player> {
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     private final ItemStackPredicate itemsTester = new InventoryTester(
-            new EnchantmentTester(),
-            new ImbalanceItemsTester(),
-            new HelmetTester(),
-            new PotionTester(PotionEffectType.HEAL)
+        new EnchantmentTester(Map.of(
+            Enchantment.RIPTIDE, 3,
+            Enchantment.CHANNELING, 1
+        )),
+        new ImbalanceItemsTester(),
+        new HelmetTester(),
+        new PotionTester(PotionEffectType.INSTANT_HEALTH)
     );
 
     private final Predicate<PotionEffect> effectsTester = new PotionEffectTester(Map.of(
         PotionEffectType.ABSORPTION,        new PotionAllowance(2400, 3),
         PotionEffectType.REGENERATION,      new PotionAllowance(400,  1),
         PotionEffectType.FIRE_RESISTANCE,   new PotionAllowance(6000, 0),
-        PotionEffectType.DAMAGE_RESISTANCE, new PotionAllowance(6000, 0)
+        PotionEffectType.RESISTANCE,        new PotionAllowance(6000, 0)
     ));
 
     @Override

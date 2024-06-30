@@ -32,5 +32,5 @@ public class PlayerGameplayRestriction implements Runnable {
             .map(PotionEffect::getType).toList();
         illegal.forEach(this.restricted :: removePotionEffect);
     }
-
+    
 }
