@@ -42,10 +42,10 @@ import ru.ancap.framework.language.additional.LAPIDomain;
 import ru.ancap.framework.language.additional.LAPIMessage;
 import ru.ancap.framework.util.player.StepbackMaster;
 import ru.ancap.hexagon.Hexagon;
-import ru.ancap.hexagon.HexagonalGrid;
 import ru.ancap.hexagon.common.Point;
 import ru.ancap.states.AncapStates;
 import ru.ancap.states.event.events.HexagonOwnerChangeEvent;
+import ru.ancap.states.hexagons.AncapHexagonalGrid;
 import ru.ancap.states.hexagons.Codeficator;
 import ru.ancap.states.message.PrecisionFormatter;
 import ru.ancap.states.states.State;
@@ -86,7 +86,7 @@ import java.util.function.Consumer;
 @Accessors(fluent = true) @Getter
 public class WarListener implements Listener {
 
-    private final HexagonalGrid grid;
+    private final AncapHexagonalGrid grid;
     private final AssaultExecutor assaults;
     private final FieldConflicts field;
     private final WarMonitor battleMonitor;

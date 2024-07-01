@@ -1,17 +1,11 @@
 package ru.ancap.states.wars.api.castle;
 
 import lombok.AllArgsConstructor;
-import lombok.With;
-import ru.ancap.algorithm.walkthrough.StepResult;
-import ru.ancap.algorithm.walkthrough.WalkthroughData;
-import ru.ancap.algorithm.walkthrough.WalkthroughOperator;
-import ru.ancap.hexagon.Hexagon;
-import ru.ancap.states.wars.api.hexagon.WarHexagon;
-import ru.ancap.states.wars.api.state.WarState;
 
 @AllArgsConstructor
-public class TerritorialWarsCastleModule implements WalkthroughOperator<Hexagon, TerritorialWarsCastleModule.Steps> {
+public class TerritorialWarsCastleModule /* implements WalkthroughOperator<Hexagon, TerritorialWarsCastleModule.Steps> */ {
     
+    /*
     private final WarState attacker;
     private final int maxSteps;
     
@@ -41,5 +35,6 @@ public class TerritorialWarsCastleModule implements WalkthroughOperator<Hexagon,
         }
         
     }
+    */
     
 }
