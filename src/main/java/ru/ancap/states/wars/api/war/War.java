@@ -83,10 +83,10 @@ public class War {
         boolean isAttacker = this.attackerId().equals(stateId);
         boolean isDefender = this.defenderId().equals(stateId);
         if (isAttacker == isDefender) throw new IllegalStateException("\n"+
-            "Illegal opponents: " +
-            "| requested state = "+WarState.of(stateId).debugIdentifier()+";  "+
-            "| is attacker = "+isAttacker+(!isAttacker ? "; database attacker: "+WarState.of(this.attackerId()).debugIdentifier() : "")+"; " +
-            "| is defender = "+isDefender+(!isDefender ? "; database defender: "+WarState.of(this.defenderId()).debugIdentifier() : "")+"; " +
+            "Illegal opponents:\n" +
+            "| requested state = "+WarState.of(stateId).debugIdentifier()+";\n"+
+            "| is attacker = "+isAttacker+(!isAttacker ? "; database attacker: "+WarState.of(this.attackerId()).debugIdentifier() : "")+";\n" +
+            "| is defender = "+isDefender+(!isDefender ? "; database defender: "+WarState.of(this.defenderId()).debugIdentifier() : "")+";\n" +
             "| war id = "+this.id+" ("+this.name()+")"
         );
         String current;
