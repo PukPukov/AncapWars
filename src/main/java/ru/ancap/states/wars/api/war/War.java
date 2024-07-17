@@ -85,8 +85,8 @@ public class War {
         if (isAttacker == isDefender) throw new IllegalStateException("Illegal opponents: " + 
             "attacker = "+isAttacker+"; " +
             "defender = "+isDefender+"; " +
-            "requested state id = "+stateId+";  "+ 
-            "war id = "+this.id
+            "requested state id = "+stateId+" ("+ WarState.of(stateId)+");  "+ 
+            "war id = "+this.id+" ("+this.name()+")"
         );
         String current;
         String opponent;
