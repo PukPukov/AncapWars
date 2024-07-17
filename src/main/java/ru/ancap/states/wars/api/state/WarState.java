@@ -355,7 +355,7 @@ public abstract class WarState {
     }
     
     /**
-     * Should be warActor().
+     * Should be called only on war actors.
      */
     @ContextAware(awareOf = Aware.STATE, handle = InsecureContextHandle.NO_HANDLE)
     public List<WarHexagon> unprotectedBorderHexagons() {
