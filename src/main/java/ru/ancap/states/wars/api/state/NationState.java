@@ -47,6 +47,11 @@ public class NationState extends WarState {
     }
     
     @Override
+    public String name() {
+        return this.nation.getName();
+    }
+    
+    @Override
     public Warrior leader() {
         return Warrior.findByID(this.nation.getCapital().getMayor().getID());
     }
