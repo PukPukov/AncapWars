@@ -39,7 +39,7 @@ public class HereInfoAddon {
                         case WAR -> new LAPIMessage(AncapWars.class, "assault.status.war");
                         default -> throw new IllegalStateException("Unexpected value: " + runtimeType);
                     }));
-                    add(new InfoMessage.Value("attacker", new Message(runtime.attacker().getName())));
+                    add(new InfoMessage.Value("attacker", new Message(runtime.attacker().name())));
                 }
                 @Nullable Castle castle = hexagon.castle();
                 if (castle != null) {

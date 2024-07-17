@@ -85,8 +85,8 @@ public class BuiltCastle extends Castle {
     @Override
     public CallableMessage attackMessage(WarState attacker, WarState defender) {
         return new LAPIMessage(AncapWars.class, "assault.declare",
-            new Placeholder("attacker", attacker.getName()),
-            new Placeholder("defender", defender.getName()),
+            new Placeholder("attacker", attacker.name()),
+            new Placeholder("defender", defender.name()),
             new Placeholder("name", this.name())
         );
     }
@@ -96,9 +96,9 @@ public class BuiltCastle extends Castle {
         AncapWars.assaults().acceptAssault(wait, prepareRuntime, toSet);
         Bukkit.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.Assault.START, player,
-            "%STATE%",  prepareRuntime.attacker().getName(),
+            "%STATE%",  prepareRuntime.attacker().name(),
             "%NAME%",   this.name(),
-            "%TARGET%", wait.getBarrier().owner().getName()
+            "%TARGET%", wait.getBarrier().owner().name()
         ));
     }
 
@@ -122,7 +122,7 @@ public class BuiltCastle extends Castle {
     public @Nullable CallableMessage deleteMessage(WarState destroyer) {
         return new LAPIMessage(Message.Minecraft.Notify.Assault.DESTROY,
             new Placeholder("name", this.name()),
-            new Placeholder("state", destroyer.getName())
+            new Placeholder("state", destroyer.name())
         );
     }
 

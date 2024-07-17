@@ -73,7 +73,7 @@ public class AttackCounter {
         else if (lastAttacks.size() == 1) communicator.send(new LAPIMessage(
             AncapWars.class, "messages.minecraft.attention.field.attack.single",
             new Placeholder("coordinates", new HexagonCoordinates(lastAttacks.get(0).getValue().getHexagon())),
-            new Placeholder("state",       lastAttacks.get(0).getKey().getName())
+            new Placeholder("state",       lastAttacks.get(0).getKey().name())
         ));
         else communicator.send(new LAPIMessage(AncapWars.class, "messages.minecraft.attention.field.attack.multiple"));
     }

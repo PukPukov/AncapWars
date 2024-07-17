@@ -100,8 +100,8 @@ public class WarListener implements Listener {
         Bukkit.getOnlinePlayers().forEach(listeningPlayer -> listeningPlayer.sendMessage(
             Component.text(LAPI.localized(Message.Minecraft.Notify.Hexagon_legacy.OCCUPY, Identifier.of(listeningPlayer))
                 .replace("%COORDINATES%", hexagon.getReadableBlockCoordinates())
-                .replace("%OCCUPIER%", occupier.getName())
-                .replace("%LOSER%", loser.getName())
+                .replace("%OCCUPIER%", occupier.name())
+                .replace("%LOSER%", loser.name())
             )
         ));
         AncapDebug.debug("ON OCCUPY END");
@@ -279,8 +279,8 @@ public class WarListener implements Listener {
         Bukkit.getOnlinePlayers().forEach(player -> {
             player.playSound(player.getLocation(), Sounds.War.DECLARE, 100, 0);
             player.sendMessage(Component.text(LAPI.localized(Message.Minecraft.Notify.War.Start.DECLARE, Identifier.of(player))
-                .replace("%ATTACKER%", event.getAttacker().getName())
-                .replace("%TARGET%", event.getTarget().getName())
+                .replace("%ATTACKER%", event.getAttacker().name())
+                .replace("%TARGET%", event.getTarget().name())
                 .replace("%REASON%", event.getData().reason())));
         });
     }
@@ -288,8 +288,8 @@ public class WarListener implements Listener {
     @EventHandler
     public void on(AssaultRepulseEvent event) {
         Bukkit.getOnlinePlayers().forEach(player -> LAPIReceiver.send(Message.Minecraft.Notify.Assault.REPULSE, player,
-            "%STATE%", event.getRuntime().barrier().hexagon().getOwner().getName(),
-            "%ATTACKER%", event.getRuntime().attacker().getName(),
+            "%STATE%", event.getRuntime().barrier().hexagon().getOwner().name(),
+            "%ATTACKER%", event.getRuntime().attacker().name(),
             "%NAME%", ((BuiltCastle) event.getRuntime().barrier()).name()
         ));
     }
