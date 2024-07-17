@@ -370,7 +370,7 @@ public abstract class WarState {
             .toList();
     }
     
-    public String debugId() {
+    public String debugIdentifier() {
         return this.id() + " ("+this.name()+")";
     }
     
