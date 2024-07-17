@@ -214,7 +214,7 @@
         <dependency>
             <groupId>ru.ancap</groupId>
             <artifactId>Artifex</artifactId>
-            <version>1.7-pre</version>
+            <version>1.7-pre.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
