@@ -82,11 +82,12 @@ public class War {
     public WarView viewAs(String stateId) {
         boolean isAttacker = this.attackerId().equals(stateId);
         boolean isDefender = this.defenderId().equals(stateId);
-        if (isAttacker == isDefender) throw new IllegalStateException("Illegal opponents: " + 
-            "attacker = "+isAttacker+"; " +
-            "defender = "+isDefender+"; " +
-            "requested state id = "+stateId+" ("+ WarState.of(stateId).getName()+");  "+ 
-            "war id = "+this.id+" ("+this.name()+")"
+        if (isAttacker == isDefender) throw new IllegalStateException("\n"+
+            "Illegal opponents: " +
+            "| requested state = "+WarState.of(stateId).debugIdentifier()+";  "+
+            "| is attacker = "+isAttacker+(!isAttacker ? "; database attacker: "+WarState.of(this.attackerId()).debugIdentifier() : "")+"; " +
+            "| is defender = "+isDefender+(!isDefender ? "; database defender: "+WarState.of(this.defenderId()).debugIdentifier() : "")+"; " +
+            "| war id = "+this.id+" ("+this.name()+")"
         );
         String current;
         String opponent;
