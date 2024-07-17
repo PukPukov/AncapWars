@@ -90,6 +90,10 @@ public abstract class WarState {
     public abstract PathDatabase getDatabase();
     public abstract String id();
     public abstract String name();
+    @Deprecated
+    public String getName() {
+        return this.name();
+    }
     public abstract boolean exists();
     public abstract Warrior leader();
     public abstract void claimHexagon(WarHexagon hexagon);
