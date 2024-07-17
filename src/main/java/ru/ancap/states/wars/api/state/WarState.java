@@ -348,11 +348,8 @@ public abstract class WarState {
             .map(war -> war.viewAs(this.id()))
             .forEach(view -> {
                 var affiliateWar = affiliate.warWith(view.opponent());
-                if (affiliateWar == null) {
-                    view.transferTo(affiliate);
-                } else {
-                    view.war().stop(new War.MergeStrategy(affiliateWar.war()));
-                }
+                if (affiliateWar == null) view.transferTo(affiliate);
+                else view.war().stop(new War.MergeStrategy(affiliateWar.war()));
             });
         AncapWars.assaults().makeIncorporation(this, affiliate);
         AncapWars.fieldConflicts().makeIncorporation(this, affiliate);
