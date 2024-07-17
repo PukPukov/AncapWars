@@ -89,7 +89,7 @@ public abstract class WarState {
     public abstract boolean containsIn(WarState stateAPI);
     public abstract PathDatabase getDatabase();
     public abstract String id();
-    public abstract String getName();
+    public abstract String name();
     public abstract boolean exists();
     public abstract Warrior leader();
     public abstract void claimHexagon(WarHexagon hexagon);
@@ -128,7 +128,7 @@ public abstract class WarState {
         newBalance.remove(attackFee);
         this.setBalance(newBalance);
         if (!barrier.canBeAttackedBy(this)) throw new HexagonIsProtectedException();
-        AncapDebug.debug("Бросаем BarrierAttackDeclareEvent c "+barrier+", "+this.getName());
+        AncapDebug.debug("Бросаем BarrierAttackDeclareEvent c "+barrier+", "+this.name());
         Bukkit.getOnlinePlayers().stream().map(Communicator::of)
             .forEach(communicator -> communicator.message(barrier.attackMessage(this, target)));
         new BarrierAttackDeclareEvent(barrier, this, warView.war()).callEvent();
@@ -142,7 +142,7 @@ public abstract class WarState {
         if (this.id().equals(state.id()))     throw new IdiotException();
         if (this.isAllyOf(state))             throw new AllyDeclareException();
         if (this.atWarWith(state))            throw new AlreadyInWarException();
-        if (state.neutral())                  throw new StateIsNeutralException(state.getName());
+        if (state.neutral())                  throw new StateIsNeutralException(state.name());
         if (WarID.war().isBound(data.name())) throw new NameAlreadyBoundException();
 
         new WarDeclareEvent(this, state, data).callEvent();
@@ -161,12 +161,12 @@ public abstract class WarState {
         WarState finalEnemy = enemy;
         this.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Peace.Request.Offer.YOU, player,
-            "%STATE%", finalEnemy.getName(),
+            "%STATE%", finalEnemy.name(),
             "%TERMS%", request.terms()
         ));
         enemy.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Peace.Request.Offer.TO_YOU, player,
-            "%STATE%", this.getName(),
+            "%STATE%", this.name(),
             "%TERMS%", request.terms()
         ));
     }
@@ -179,7 +179,7 @@ public abstract class WarState {
         WarState finalEnemy = enemy;
         this.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Peace.Request.Revoke.YOU, player,
-            "%STATE%", finalEnemy.getName(),
+            "%STATE%", finalEnemy.name(),
             "%TERMS%", state.terms()
         ));
     }
@@ -193,12 +193,12 @@ public abstract class WarState {
         WarState finalEnemy = enemy;
         this.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Stop.PEACE, player,
-            "%STATE%", finalEnemy.getName(),
+            "%STATE%", finalEnemy.name(),
             "%TERMS%", state.terms()
         ));
         enemy.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Stop.PEACE, player,
-            "%STATE%", this.getName(),
+            "%STATE%", this.name(),
             "%TERMS%", state.terms()
         ));
 
@@ -212,13 +212,13 @@ public abstract class WarState {
         WarState finalEnemy = enemy;
         this.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Peace.Request.Reject.YOU, player,
-            "%STATE%", finalEnemy.getName(),
+            "%STATE%", finalEnemy.name(),
             "%TERMS%", state.terms()
         ));
 
         enemy.getOnlinePlayers().forEach(player -> LAPIReceiver.send(
             Message.Minecraft.Notify.War.Peace.Request.Reject.YOURS, player,
-            "%STATE%", this.getName(),
+            "%STATE%", this.name(),
             "%TERMS%", state.terms()
         ));
     }
@@ -232,7 +232,7 @@ public abstract class WarState {
     }
 
     public boolean neutral() {
-        return this.warActor().getName().equalsIgnoreCase("ANCAP_LTD");
+        return this.warActor().name().equalsIgnoreCase("ANCAP_LTD");
     }
 
     public boolean atWarWith(WarState state) {
@@ -292,7 +292,7 @@ public abstract class WarState {
             war.war().stop(new War.DefeatStrategy(war.opponent()));
             war.opponent().getOnlinePlayers().forEach(player -> LAPIReceiver.send(
                 Message.Minecraft.Notify.War.Stop.DEATH, player,
-                "%STATE%", this.getName()
+                "%STATE%", this.name()
             ));
         }
     }
@@ -368,6 +368,10 @@ public abstract class WarState {
             .filter(hex -> hex.barrier() == null)
             .filter(hex -> hex.getNeighbours().stream().noneMatch(neighbour -> (this.containsHex(neighbour) && neighbour.castle() != null)))
             .toList();
+    }
+    
+    public String debugId() {
+        return this.id() + " ("+this.name()+")";
     }
     
 }

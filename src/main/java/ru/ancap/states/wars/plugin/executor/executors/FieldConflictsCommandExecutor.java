@@ -46,7 +46,7 @@ public class FieldConflictsCommandExecutor extends CommandTarget {
                             new ArrayList<>(attacks),
                             (attack) -> new LAPIMessage(
                                 AncapWars.class, "messages.minecraft.attention.field.attack.status.attacked-format",
-                                new Placeholder("attacker", attack.attacker().getName()),
+                                new Placeholder("attacker", attack.attacker().name()),
                                 new Placeholder("attacked hexagon coordinates", new HexagonCoordinates(attack.hexagon().getHexagon())),
                                 new Placeholder("progress bar", new ProgressBar(
                                     attack.conqueredPart(),

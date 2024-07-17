@@ -59,8 +59,8 @@ public class CoreBarrier implements Barrier {
     @Override
     public CallableMessage attackMessage(WarState attacker, WarState defender) {
         return new LAPIMessage(AncapWars.class, "barrier.central.scheduled-attack",
-            new Placeholder("attacker", attacker.getName()),
-            new Placeholder("defender", defender.getName())
+            new Placeholder("attacker", attacker.name()),
+            new Placeholder("defender", defender.name())
         );
     }
 
@@ -68,8 +68,8 @@ public class CoreBarrier implements Barrier {
     public void acceptTimedAttack(AttackWait wait, AssaultRuntime prepareRuntime, List<WarHexagon> toSet) {
         Bukkit.getOnlinePlayers().stream().map(Communicator::of)
             .forEach(communicator -> communicator.message(new LAPIMessage(AncapWars.class, "barrier.central.attack",
-                new Placeholder("attacker", wait.getAttacker().getName()),
-                new Placeholder("defender", wait.getBarrier().owner().getName())
+                new Placeholder("attacker", wait.getAttacker().name()),
+                new Placeholder("defender", wait.getBarrier().owner().name())
             )));
         for (WarHexagon hexagon : toSet) AncapWars.assaults().setPeace(hexagon.code());
         this.delete();
