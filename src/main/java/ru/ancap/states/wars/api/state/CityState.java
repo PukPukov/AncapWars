@@ -142,7 +142,12 @@ public class CityState extends WarState {
         
         return nation.getID().equals(stateAPI.id());
     }
-
+    
+    @Override
+    public String name() {
+        return this.city.getName();
+    }
+    
     @Nullable
     public NationState getWarNation() {
         return SafeNull.function(this.getNation(), notNull -> new NationState(notNull.getID()));
