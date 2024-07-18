@@ -365,16 +365,25 @@ public class WarListener implements Listener {
     
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void on(SubjectChangeAffiliationEvent event) {
+        AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent");
         if (!(event.subject() instanceof State subject)) return;
+        AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 2");
         WarState warSubject = WarState.of(subject.id());
         switch (event.changeType()) {
-            case LEAVE -> warSubject.failTerritorialDefence();
+            case LEAVE -> {
+                AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 3");
+                warSubject.failTerritorialDefence();
+            }
             case JOIN -> {
-                if (!(event.newAffiliate().get() instanceof State affiliate)) throw new IllegalStateException();
+                AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 4");
+                if (!(event.newAffiliate().orElseThrow() instanceof State affiliate)) throw new IllegalStateException();
+                AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 5");
                 WarState warAffiliate = WarState.of(affiliate.id());
                 permission_check: if (event.requestState() instanceof RequestState.Request<Player> request) {
                     Warrior requester = Warrior.get(request.requester());
-                    if (warSubject.viewActiveWars().size() == 0 || requester.canManageWarsOf(warAffiliate)) break permission_check;
+                    AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 6");
+                    if (warSubject.viewActiveWars().isEmpty() || requester.canManageWarsOf(warAffiliate)) break permission_check;
+                    AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 7");
                     event.setCancelled(true);
                     requester.sendMessage(new LAPIMessage(
                         AncapWars.class, "cant-affiliate-because-of-not-allowed-war-transfer",
@@ -383,6 +392,14 @@ public class WarListener implements Listener {
                     ));
                     return;
                 }
+                AncapDebug.debug("Прилетел SubjectChangeAffiliationEvent 8");
+                AncapDebug.debug(
+                    "Вызываем warIncorporate() после SubjectChangeAffiliationEvent",
+                    "change type", event.changeType(),
+                    "request state", event.requestState(),
+                    "subject", event.subject(),
+                    "new affiliate", event.newAffiliate()
+                );
                 warSubject.warIncorporate(warAffiliate);
             }
         }
