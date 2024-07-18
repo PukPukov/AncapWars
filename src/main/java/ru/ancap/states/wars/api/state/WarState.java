@@ -256,7 +256,11 @@ public abstract class WarState {
     }
     
     public List<War> wars() {
-        return this.warActor().getDatabase().readStrings("wars", true).stream()
+        return this.warActor().selfWars();
+    }
+    
+    public List<War> selfWars() {
+        return this.getDatabase().readStrings("wars", true).stream()
             .map(War::new).toList();
     }
     
@@ -342,15 +346,16 @@ public abstract class WarState {
     
     public void warIncorporate(WarState affiliate) {
         List<String> warIds = this.getDatabase().readStrings("wars", true);
+        // переносим вью
+        for (War war : this.selfWars()) {
+            WarView warView = war.viewAs(this.id());
+            WarView affiliateWarWithOpponent = affiliate.warWith(warView.opponent());
+            if (affiliateWarWithOpponent != null) war.stop(new War.MergeStrategy(affiliateWarWithOpponent.war()));
+            else warView.transferTo(affiliate);
+        }
+        // переносим принадлежности к войнам
         for (String id : warIds) affiliate.addWar(id);
         this.getDatabase().write("wars", List.of());
-        this.wars().stream()
-            .map(war -> war.viewAs(this.id()))
-            .forEach(view -> {
-                var affiliateWar = affiliate.warWith(view.opponent());
-                if (affiliateWar == null) view.transferTo(affiliate);
-                else view.war().stop(new War.MergeStrategy(affiliateWar.war()));
-            });
         AncapWars.assaults().makeIncorporation(this, affiliate);
         AncapWars.fieldConflicts().makeIncorporation(this, affiliate);
     }

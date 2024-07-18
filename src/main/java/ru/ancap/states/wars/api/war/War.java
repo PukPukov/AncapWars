@@ -61,7 +61,7 @@ public class War {
     }
 
     public WarView attackerView() {
-        return this.viewAs(this.attackerId());
+        return this.viewAs(this.attackerId()); // насколько я помню здесь намеренно это сделано для удостоверения в консистентности
     }
 
     public String attackerId() {
@@ -69,7 +69,7 @@ public class War {
     }
 
     public WarView defenderView() {
-        return this.viewAs(this.defenderId());
+        return this.viewAs(this.defenderId()); // насколько я помню здесь намеренно это сделано для удостоверения в консистентности
     }
 
     public String defenderId() {
