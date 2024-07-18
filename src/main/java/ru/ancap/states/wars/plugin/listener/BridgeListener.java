@@ -59,6 +59,7 @@ public class BridgeListener implements Listener {
         WarState.initialize(event.getHost().getID(), StateType.NATION);
         WarState inner = WarState.of(event.getCreator().id());
         WarState host  = WarState.of(event.getHost()   .id());
+        AncapDebug.debug("Вызываем warIncorporate() после NationFoundEvent", "inner", inner.debugIdentifier(), "host", host.debugIdentifier());
         inner.warIncorporate(host);
     }
 
