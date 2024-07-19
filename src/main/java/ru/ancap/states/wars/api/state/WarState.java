@@ -354,8 +354,8 @@ public abstract class WarState {
             else warView.transferTo(affiliate);
         }
         // переносим принадлежности к войнам
-        for (String id : warIds) affiliate.addWar(id);
         this.getDatabase().write("wars", List.of());
+        for (String id : warIds) affiliate.addWar(id);
         AncapWars.assaults().makeIncorporation(this, affiliate);
         AncapWars.fieldConflicts().makeIncorporation(this, affiliate);
     }
