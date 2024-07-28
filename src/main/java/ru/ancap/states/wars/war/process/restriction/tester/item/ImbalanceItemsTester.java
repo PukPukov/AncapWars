@@ -15,7 +15,7 @@ public class ImbalanceItemsTester implements ItemStackPredicate {
 
     @Override
     public boolean test(ItemStack itemStack) {
-        return !banned.contains(itemStack.getType());
+        return !this.banned.contains(itemStack.getType());
     }
 
 }
