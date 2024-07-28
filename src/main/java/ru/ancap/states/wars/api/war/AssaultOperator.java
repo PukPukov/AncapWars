@@ -201,7 +201,7 @@ public class AssaultOperator implements AssaultExecutor, Listener {
     
     @Override
     public synchronized void makeIncorporation(WarState inner, WarState outer) {
-        
+        // as far as I understand assault is bound not to state, but to castle, and war incorporation is not needed to assaults
     }
 
     @Override
