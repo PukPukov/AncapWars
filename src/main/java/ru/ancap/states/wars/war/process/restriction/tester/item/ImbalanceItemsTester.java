@@ -10,7 +10,9 @@ public class ImbalanceItemsTester implements ItemStackPredicate {
     private final List<Material> banned = List.of(
         Material.END_CRYSTAL,
         Material.RESPAWN_ANCHOR,
-        Material.TNT_MINECART
+        Material.TNT_MINECART,
+        Material.COBWEB,
+        Material.LAVA_BUCKET
     );
 
     @Override
