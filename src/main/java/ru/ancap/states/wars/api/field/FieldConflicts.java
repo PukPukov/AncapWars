@@ -43,6 +43,7 @@ public class FieldConflicts {
             /* две дорогостоящие и *неоптимизированные* операции, если будет лагать можно 
                заменить на ручное объявление атаки, оптимизировать или добавить кэши, но лучше просто 
                отказаться от лагучей конфиг-бд */
+            /* а ещё лучше всё сразу */
         RelateStatus status = this.getRelations(player, defender);
         if (this.mayAttack(attacker, status, code)) this.startAttack(new FieldConflict(hexagon, attacker, defender, this.hexagonMaxHealth));
         if (this.atFieldConflict(code)) {
