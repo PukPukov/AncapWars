@@ -323,7 +323,7 @@ public abstract class WarState {
     public List<Barrier> barriers() {
         return Stream.concat(
             this.getCastles().stream(),
-            AncapStates.getCityMap().getCities().stream()
+            AncapStates.cityMap().cities().stream()
                 .map(city -> new CityState(city.id()))
                 .map(CityState::coreBarrier)
                 .filter(Objects::nonNull)
