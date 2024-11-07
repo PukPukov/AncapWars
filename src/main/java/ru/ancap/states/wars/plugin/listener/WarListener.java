@@ -146,7 +146,7 @@ public class WarListener implements Listener {
 
         switch (type) {
             case WAR -> {
-                if (BedrockIntegration.check(player)) {
+                if (BedrockIntegration.bcheck(player)) {
                     AssaultRuntime runtime = this.assaults().assault(code);
                     BossBars.send(player, 1, BossBar.bossBar(
                         Component.text(LAPI.localized(
@@ -163,7 +163,7 @@ public class WarListener implements Listener {
         }
         this.field().acceptExistence(player, code, this.onOccupy, this.onHit);
         if (this.field().atFieldConflict(code)) {
-            if (BedrockIntegration.check(player)) {
+            if (BedrockIntegration.bcheck(player)) {
                 double occupyLevel = this.field().occupyLevel(code);
                 float occupationFloat = (float) occupyLevel;
                 String occupationPercentage = PrecisionFormatter.format((occupyLevel * 100), 3);
