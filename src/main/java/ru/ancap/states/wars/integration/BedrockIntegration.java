@@ -9,7 +9,7 @@ import ru.ancap.states.wars.messaging.Message;
 
 public class BedrockIntegration {
 
-    public static boolean check(Player player) {
+    public static boolean bcheck(Player player) {
         if (FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) {
             player.kick(Component.text(LAPI.localized(Message.Minecraft.Error.War.BEDROCK, Identifier.of(player))));
             return false;
