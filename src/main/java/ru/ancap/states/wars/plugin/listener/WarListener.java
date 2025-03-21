@@ -119,7 +119,7 @@ public class WarListener implements Listener {
     private final Consumer<Player> onHeartbeatAction = player -> {
         if (player.isDead()) return;
         Warrior warrior = Warrior.get(player);
-        if (AncapWars.GLOBAL_BATTLE) this.battleMonitor().accept(player);
+        if (WarConfig.loaded().globalBattle()) this.battleMonitor().accept(player);
         
         Bukkit.getScheduler().runTask(Artifex.PLUGIN(), () -> this.stepbackMaster().ensureOuter(
             player,
@@ -158,7 +158,7 @@ public class WarListener implements Listener {
                         BossBar.Overlay.NOTCHED_6
                     ));
                     player.sendActionBar(Component.text("Сердце замка находится в "+PrecisionFormatter.format(player.getLocation().distance(runtime.barrier().location()), 2)+" блоках"));
-                    if (!AncapWars.GLOBAL_BATTLE) this.battleMonitor().accept(player);
+                    if (!WarConfig.loaded().globalBattle()) this.battleMonitor().accept(player);
                 }
             } default -> BossBars.hide(player, 1);
         }
