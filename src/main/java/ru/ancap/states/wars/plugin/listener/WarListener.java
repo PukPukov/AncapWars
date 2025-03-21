@@ -71,7 +71,7 @@ import ru.ancap.states.wars.messaging.Sounds;
 import ru.ancap.states.wars.plugin.config.WarConfig;
 import ru.ancap.states.wars.utils.LAPIReceiver;
 import ru.ancap.states.wars.war.info.AssaultExecutor;
-import ru.ancap.states.wars.war.process.restriction.WarMonitor;
+import ru.ancap.states.wars.war.process.restriction.BattleMonitor;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -89,7 +89,7 @@ public class WarListener implements Listener {
     private final AncapHexagonalGrid grid;
     private final AssaultExecutor assaults;
     private final FieldConflicts field;
-    private final WarMonitor battleMonitor;
+    private final BattleMonitor battleMonitor;
     private final AttackCounter attackCounter;
     private final StepbackMaster stepbackMaster;
 
@@ -119,7 +119,7 @@ public class WarListener implements Listener {
     private final Consumer<Player> onHeartbeatAction = player -> {
         if (player.isDead()) return;
         Warrior warrior = Warrior.get(player);
-        
+        if (AncapWars.GLOBAL_BATTLE) this.battleMonitor().accept(player);
         
         Bukkit.getScheduler().runTask(Artifex.PLUGIN(), () -> this.stepbackMaster().ensureOuter(
             player,
@@ -146,7 +146,8 @@ public class WarListener implements Listener {
 
         switch (type) {
             case WAR -> {
-                if (BedrockIntegration.bcheck(player)) {
+                boolean continue_ = BedrockIntegration.bcheck(player);
+                if (continue_) {
                     AssaultRuntime runtime = this.assaults().assault(code);
                     BossBars.send(player, 1, BossBar.bossBar(
                         Component.text(LAPI.localized(
@@ -157,7 +158,7 @@ public class WarListener implements Listener {
                         BossBar.Overlay.NOTCHED_6
                     ));
                     player.sendActionBar(Component.text("Сердце замка находится в "+PrecisionFormatter.format(player.getLocation().distance(runtime.barrier().location()), 2)+" блоках"));
-                    this.battleMonitor().accept(player);
+                    if (!AncapWars.GLOBAL_BATTLE) this.battleMonitor().accept(player);
                 }
             } default -> BossBars.hide(player, 1);
         }

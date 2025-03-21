@@ -1,7 +1,10 @@
 package ru.ancap.states.wars.war.process.restriction;
 
+import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import ru.ancap.states.wars.war.process.restriction.tester.item.*;
@@ -9,14 +12,13 @@ import ru.ancap.states.wars.war.process.restriction.tester.potion.PotionAllowanc
 import ru.ancap.states.wars.war.process.restriction.tester.potion.PotionEffectTester;
 
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-public class WarMonitor implements Consumer<Player> {
+@RequiredArgsConstructor
+public class BattleMonitor implements Consumer<Player> {
 
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final Plugin plugin;
 
     private final ItemStackPredicate itemsTester = new InventoryTester(
         new EnchantmentTester(Map.of(
@@ -37,7 +39,7 @@ public class WarMonitor implements Consumer<Player> {
 
     @Override
     public void accept(Player player) {
-        this.executor.execute(new PlayerGameplayRestriction(
+        Bukkit.getScheduler().runTask(this.plugin, new PlayerGameplayRestriction(
             this.itemsTester,
             this.effectsTester,
             player

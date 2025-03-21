@@ -1,0 +1,199 @@
+language: zh
+version: 6
+
+ru:
+  ancap:
+    types:
+    
+    states:
+      
+      info:
+        here:
+          values:
+            hexagon-location: "<color>六边形坐标</color>"
+            hexagon-code: "<color>六边形代码</color>"
+            assault-status: "<color>进攻状态</color>"
+            castle: "<color>城堡</color>"
+            attacker: "<color>进攻方</color>"
+            core-barrier-broken: "<color>核心已被破坏</color>"
+      
+      wars:
+        
+        # modern
+        info:
+          broken:
+            yes_: "<red>是</red>"
+            no_: "<green>否</green>"
+        barrier:
+          lack:
+            zero: "<green>贵国所有边境六边形均已部署防御工事。</green>"
+            amount:
+              - "<red>贵国有<u>%AMOUNT%</u>个边境六边形未部署防御工事：</red>"
+              - "%COORDINATES%"
+            notification:
+              text:
+                - "<red>贵国有<u>%AMOUNT%</u>个六边形未部署防御工事。</red>"
+                - "  <gray><italic>查看列表：<dark_gray>/barrier lack</dark_gray></italic></gray>"
+                - "  <gray><italic>关闭通知：<dark_gray>/barrier lack notifications toggle</dark_gray></italic></gray>"
+              toggler-value: "<color>未设防六边形警报</color>"
+          central:
+            scheduled-attack: "%ATTACKER%正在进攻%DEFENDER%的核心。最终决战将于明日莫斯科时间18:00开始。"
+            attack: "%ATTACKER%正在进攻%DEFENDER%的核心。"
+          attack:
+            at-invalid-time: "<green>由于拥有<u>ru.ancap.states.wars.barrier.attack.at-invalid-time</u>权限，您可在非规定时段发起进攻</green>"
+        fees:
+          castle-creation: "创建城堡：%FEE%"
+          castle-attack: "进攻城堡：%FEE%"
+          devastation-repayment: "荒芜重建：%FEE%"
+          core-barrier-attack: "进攻核心防御工事：%FEE%"
+        name-already-bound: "<red>该名称已被占用！</red>"
+        leave-prepared-hexagon: "<red>请立即撤离军事准备区域</red>"
+        toggler:
+          toggled: "<green>%VALUE%状态已设置为<u>%STATUS%</u></green>"
+          represent: "<green>%VALUE%状态：<u>%STATUS%</u></green>"
+        state:
+          you-are-free: "<red>您未加入任何国家。</red>"
+          cant-affiliate-because-of-not-allowed-war-transfer: "<red>由于%SUBJECT%处于战争状态且您无权限转移%AFFILIATE%的战争状态，无法进行整合。</red>"
+        assault:
+          declare: "§l§9[§1§l🗡§l§9] §f国家§f§n%ATTACKER%§f开始进攻§f§n%DEFENDER%§f的城堡§f§n%NAME%§f。总攻将于明日莫斯科时间18:00开始。"
+          bossbar: "%CASTLE_NAME%"
+          status:
+            peace: "<color>和平</color>"
+            prepare: "<color>战前准备</color>"
+            war: "<color>进攻中</color>"
+        
+        field-conflicts:
+          toggler:
+            notify-status: "<color>六边形遭受攻击警报</color>"
+        hexagon:
+          coordinates: "[<u>%X%</u>；<u>%Z%</u>]"
+          not-devastated: "<red>该六边形状态正常，无需重建。</red>"
+          devastated: "<red>该六边形处于荒芜状态，无法建造。请先使用<u>/hexagon rebuild</u>进行重建。</red>"
+          cant-change-owner-at-war: "<red>处于战争状态的六边形无法变更所有权。</red>"
+        castle:
+          unstable-build: "<red>无法在交战状态的六边形建造城堡。请先击退进攻！</red>"
+        
+        # legacy
+        
+        messages:
+          minecraft:
+            errors:
+              command:
+                war-name-already-bound: "§c同名战争已存在。"
+                not-a-state-type: "§c%INPUT%不是有效的国家类型。"
+                not-a-state: "§c%INPUT%不是有效的国家名称。"
+                not-enough-money: "<red>资金不足。</red>"
+              dev:
+                command: "§c该指令开发中。具体进度请私信PukPukov。"
+              permission:
+                lack: "§c权限不足。"
+              request:
+                already-sent: "§c请求已发送"
+                not-sent: "§c请求尚未发送"
+              state:
+                free: "§c您未加入任何国家。"
+                neutral: "§c目标国家为中立状态。"
+                already-in-war: "§c已与目标国家处于交战状态。"
+                not-in-war: "§c未与目标国家处于交战状态。"
+                not-enough-money: "§c国家资金不足。"
+                cant-declare-yourself: "§c无法向自己宣战。"
+                cant-declare-ally: "§c目标国家是您的盟友。"
+              war:
+                bedrock: "§c基岩版玩家不可参战。请使用POJAV LAUNCHER。"
+              castle:
+                name:
+                  not-found: "§c不存在名为%NAME%的城堡！"
+                  occupied: "§c该城堡名称已被占用。"
+                hexagon:
+                  already-built: "§c该六边形已有城堡。"
+              barrier:
+                hexagon:
+                  no-barrier: "§c该六边形无防御工事。"
+                  protected: "§c无法进攻位于国家腹地的防御工事。"
+                penalty: "<red>因国家处于处罚状态，无法发起进攻。</red>"
+                attack:
+                  attacked: "§c目标防御工事已遭受攻击。"
+                  time:
+                    invalid: "§c仅可在莫斯科时间8:00至18:00期间发起进攻。"
+              name:
+                invalid: "§c名称\"%NAME%\"无效。仅允许使用中英文字母、数字、连字符及下划线。"
+            command:
+              war:
+                declare:
+                  conversation:
+                    type: "§f§6请输入目标国家类型（\"nation\"或\"city\"）。"
+                    target: "§f§6请输入目标国家名称。"
+                    name: "§f§6请输入战争名称（示例：第三次俄土战争）。名称不可更改，请谨慎命名。"
+                    reason: "§f§6请输入宣战理由（示例：压迫少数民族）。"
+                peace:
+                  conversation:
+                    terms: "§6请输入和平协议条款（示例：\"德国向法国支付赔款\"）。"
+              wars:
+                list:
+                  topic: "%STATE%的战争列表"
+                  entry: "— %WAR%"
+                debug:
+                  toggle: "调试状态已切换至<green>%STATUS%</green>。"
+                  status: "当前调试状态：<green>%STATUS%</green>"
+            notify:
+              castle:
+                found: "§l§9[§1§l🗡§l§9] >> §f§n%PLAYER%§f建造了城堡§f§n%NAME%§f。"
+              assault:
+                declare: "§l§9[§1§l🗡§l§9] §f国家§f§n%STATE%§f开始进攻您的城堡§f§n%NAME%§f。总攻将于明日莫斯科时间18:00开始。"
+                you_declared: "§l§9[§1§l🗡§l§9] §f您的国家开始进攻§f§n%STATE%§f的城堡§f§n%NAME%§f。总攻将于明日莫斯科时间18:00开始。"
+                start: "§l§9[§1§l🗡§l§9] >> §f国家§f§n%STATE%§f开始进攻§f§n%TARGET%§f的城堡§f§n%NAME%§f。"
+                repulse: "§l§9[§1§l🗡§l§9] >> §f国家§f§n%STATE%§f成功抵御了§f§n%ATTACKER%§f对城堡§f§n%NAME%§f的进攻。"
+                destroy: "§l§9[§1§l🗡§l§9] >> §f城堡§f§n%NAME%§f已被国家§f§n%STATE%§f摧毁。"
+              hexagon:
+                occupy: "§l§9[§1§l🗡§l§9] >> §f国家§f§n%OCCUPIER%§f占领了§f§n%LOSER%§f的六边形§f§n%COORDINATES%§f。"
+              war:
+                penalty:
+                  get: "§c贵国获得%TIME%小时处罚！"
+                start:
+                  declare: "§l§9[§1§l🗡§l§9] >> §f国家§f§n%ATTACKER%§f以\"§f§n%REASON%§f\"为由向§f§n%TARGET%§f宣战。"
+                stop:
+                  death: "§l§9[§1§l🗡§l§9] >> §f因§f§n%STATE%§f已解体，贵国与其的战争状态终止。"
+                  peace: "§l§9[§1§l🗡§l§9] >> §f贵国与§f§n%STATE%§f已签署和平协议，条款如下：\"§f§n%TERMS%§f\"。"
+                peace:
+                  request:
+                    offer:
+                      you: "§l§9[§1§l🗡§l§9] >> §f贵国已向§f§n%STATE%§f发送和平协议，条款如下：\"§f§n%TERMS%§f\"。"
+                      to-you: "§l§9[§1§l🗡§l§9] >> §f§n%STATE%§f提议停战，条款如下：\"§f§n%TERMS%§f\"。"
+                    revoke:
+                      you: "§l§9[§1§l🗡§l§9] >> §f贵国已撤回对§f§n%STATE%§f的和平提议。"
+                    reject:
+                      you: "§l§9[§1§l🗡§l§9] >> §f贵国已拒绝§f§n%STATE%§f的停战请求。"
+                      yours: "§l§9[§1§l🗡§l§9] >> §f§n%STATE%§f拒绝接受贵国提出的停战条款。"
+            attention:
+              field:
+                soon: "§c警告！此区域即将爆发军事冲突。"
+                attack:
+                  single: "§c贵国位于%COORDINATES%的六边形正遭受%STATE%的进攻。"
+                  multiple: "&c多个六边形正遭受攻击。输入&n/field-conflicts status&c查看详情。"
+                  status:
+                    no-attack: "<green>当前无军事冲突。</green>"
+                    some-under-attack:
+                      - "§l§9[§1§l🗡§l§9]&r 战区态势："
+                      - "%ATTACKED_LIST%"
+                      - "<red>[!]</red> — 当前正被进攻"
+                    attacked-format: "%ATTACKER% >>> %ATTACKED_HEXAGON_COORDINATES% <gray>[%PROGRESS_BAR%]</gray> %CURRENTLY_UNDER_ATTACK%"
+                    hexagon-coordinates-format: "[<u>%X%</u>；<u>%Z%</u>]"
+            info:
+              field-conflict:
+                boss-bar:
+                  name: "<color>占领进度 %PERCENTAGE%%</color>"
+              assault:
+                core:
+                  boss-bar:
+                    distance: "<color>距离城堡核心：%DISTANCE% 格</color>"
+          external:
+            notify:
+              war:
+                declare: "国家%ATTACKER%已向您宣战。"
+              assault:
+                declare: "国家%ATTACKER%开始进攻您的城堡%CASTLE%。总攻将于明日莫斯科时间18:00开始。"
+                start: "国家%ATTACKER%开始进攻您的城堡%CASTLE%。"
+                repulse: "成功抵御对城堡%CASTLE%的进攻。"
+                destroy: "您的城堡%CASTLE%已被国家%STATE%摧毁。"
+              hexagon:
+                occupy: "国家%ATTACKER%占领了您位于%COORDINATES%的六边形。"
