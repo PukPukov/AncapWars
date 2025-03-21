@@ -24,6 +24,7 @@ public class BaseDuoRequester implements DuoRequester {
         return this.target;
     }
 
+    @Override
     public BaseDuoRequester swap() {
         return this.companion;
     }

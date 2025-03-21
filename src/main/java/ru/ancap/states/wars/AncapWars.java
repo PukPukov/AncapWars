@@ -27,13 +27,15 @@ import ru.ancap.states.wars.plugin.listener.AttackCounter;
 import ru.ancap.states.wars.plugin.listener.BridgeListener;
 import ru.ancap.states.wars.plugin.listener.WarListener;
 import ru.ancap.states.wars.spoonfeeding.UnprotectedHexagonsNotification;
-import ru.ancap.states.wars.war.process.restriction.WarMonitor;
+import ru.ancap.states.wars.war.process.restriction.BattleMonitor;
 
 import java.util.List;
 
 public class AncapWars extends AncapPlugin {
 
     public static final String MESSAGE_DOMAIN = "ru.ancap.states.wars.messages.";
+    
+    public static boolean GLOBAL_BATTLE = false;
     
     private static AncapPlugin               loaded;
     private static PathDatabase              database;
@@ -42,7 +44,7 @@ public class AncapWars extends AncapPlugin {
     private static BukkitConversationManager conversationManager;
     private static AttackCounter             attackCounter;
     private static FieldConflicts            fieldConflicts;
-    private static WarMonitor warMonitor;
+    private static BattleMonitor battleMonitor;
     public  static WarListener                warListener;
 
     public static AncapPlugin               loaded              () { return AncapWars.loaded;              }
@@ -95,12 +97,12 @@ public class AncapWars extends AncapPlugin {
         AncapWars.attackCounter = new AttackCounter(this.ancap()).start();
         AncapWars.fieldConflicts = new FieldConflicts(WarConfig.loaded().getHexagonHealth());
         this.registerEventsListener(AncapWars.assaultOperator);
-        AncapWars.warMonitor = new WarMonitor();
+        AncapWars.battleMonitor = new BattleMonitor(this);
         AncapWars.warListener = new WarListener(
             AncapStates.grid,
             AncapWars.assaultOperator,
             AncapWars.fieldConflicts,
-            AncapWars.warMonitor,
+            AncapWars.battleMonitor,
             AncapWars.attackCounter,
             this.ancap().stepbackMaster()
         );

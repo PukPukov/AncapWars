@@ -13,24 +13,30 @@ import java.util.function.Predicate;
 
 @AllArgsConstructor
 public class PlayerGameplayRestriction implements Runnable {
-
+    
     private final ItemStackPredicate itemStackTester;
     private final Predicate<PotionEffect> potionEffectTester;
-
+    
     private final Player restricted;
-
+    
     /**
      * Оставляет у игрока только те предметы и эффекты, которые были допущены тестерами
      */
     @Override
     public void run() {
-        this.restricted.getInventory().setStorageContents(Arrays.stream(this.restricted.getInventory().getStorageContents())
-            .filter(this.itemStackTester)
-            .toList().toArray(new ItemStack[0]));
+        this.restricted.getInventory().setStorageContents(safe(this.restricted.getInventory().getStorageContents()));
+        this.restricted.getInventory().setArmorContents(safe(this.restricted.getInventory().getArmorContents()));
+        this.restricted.getInventory().setExtraContents(safe(this.restricted.getInventory().getExtraContents()));
         List<PotionEffectType> illegal = this.restricted.getActivePotionEffects().stream()
             .filter(this.potionEffectTester.negate())
             .map(PotionEffect::getType).toList();
         illegal.forEach(this.restricted :: removePotionEffect);
+    }
+    
+    private ItemStack[] safe(ItemStack[] contents) {
+        return Arrays.stream(contents)
+            .filter(this.itemStackTester)
+            .toList().toArray(new ItemStack[0]);
     }
     
 }
