@@ -35,8 +35,6 @@ public class AncapWars extends AncapPlugin {
 
     public static final String MESSAGE_DOMAIN = "ru.ancap.states.wars.messages.";
     
-    public static boolean GLOBAL_BATTLE = false;
-    
     private static AncapPlugin               loaded;
     private static PathDatabase              database;
     private static WarMap                    warMap;
@@ -79,7 +77,7 @@ public class AncapWars extends AncapPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        new WarConfig(this.getConfig()).load();
+        new WarConfig(this.configuration()).load();
         this.notifyEnable();
         AncapWars.loaded = this;
         this.loadLocales();

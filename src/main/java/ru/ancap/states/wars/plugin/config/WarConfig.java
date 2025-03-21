@@ -71,4 +71,8 @@ public class WarConfig {
         return debug ? this.base.getLong("castle.assault.time.debug") : this.base.getLong("castle.assault.time.normal");
     }
     
+    public boolean globalBattle() {
+        return this.base.getBoolean("global-battle");
+    }
+    
 }
