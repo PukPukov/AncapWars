@@ -27,7 +27,7 @@ public interface AssaultRuntime {
     int health();
     void setHealth(int health);
     boolean hit();
-    AssaultRuntimeType type();
+    AssaultStatus status();
     Barrier barrier();
     WarState attacker();
     War war();
@@ -37,10 +37,12 @@ public interface AssaultRuntime {
 
     @EqualsAndHashCode @ToString
     class Peace implements AssaultRuntime {
+        
+        private final static AssaultStatus status = new AssaultStatus(AssaultStatus.PoliticalState.PEACE);
 
         @Override
-        public AssaultRuntimeType type() {
-            return AssaultRuntimeType.PEACE;
+        public AssaultStatus status() {
+            return status;
         }
 
         @Override public String id()                      { throw new UnsupportedOperationException(); }
@@ -60,14 +62,14 @@ public interface AssaultRuntime {
     @ToString @EqualsAndHashCode
     class Prepare implements AssaultRuntime {
         
-        private final AssaultRuntimeType type = AssaultRuntimeType.PREPARE;
+        private final static AssaultStatus status = new AssaultStatus(AssaultStatus.PoliticalState.PREPARE);
         private final Barrier barrier;
         private final WarState attacker;
         private final War war;
         private final AttackWait waitAPI;
         private final String id;
         
-        @Override public AssaultRuntimeType type     () { return this.type;                }
+        @Override public AssaultStatus status()         { return status;                   }
         @Override public Barrier            barrier  () { return this.barrier;             }
         @Override public WarState           attacker () { return this.attacker.warActor(); }
         @Override public War                war      () { return this.war;                 }
@@ -85,8 +87,8 @@ public interface AssaultRuntime {
     @Getter
     @ToString @EqualsAndHashCode
     class Realized implements AssaultRuntime {
-
-        private final AssaultRuntimeType type = AssaultRuntimeType.WAR;
+        
+        private final static AssaultStatus status = new AssaultStatus(AssaultStatus.PoliticalState.BATTLE);
         private final Barrier barrier;
         private final WarState attacker;
         private final War war;
@@ -128,7 +130,7 @@ public interface AssaultRuntime {
         }
 
         @Override public int                health   () { return this.health.get();        }
-        @Override public AssaultRuntimeType type     () { return this.type;                }
+        @Override public AssaultStatus      status()    { return status;                   }
         @Override public Barrier            barrier  () { return this.barrier;             }
         @Override public WarState           attacker () { return this.attacker.warActor(); }
         @Override public War                war      () { return this.war;                 }

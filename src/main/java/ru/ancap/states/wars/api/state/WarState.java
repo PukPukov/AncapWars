@@ -33,7 +33,7 @@ import ru.ancap.states.wars.id.WarID;
 import ru.ancap.states.wars.messaging.Message;
 import ru.ancap.states.wars.plugin.executor.exception.*;
 import ru.ancap.states.wars.plugin.listener.AssaultRuntime;
-import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
+import ru.ancap.states.wars.plugin.listener.AssaultStatus;
 import ru.ancap.states.wars.utils.LAPIReceiver;
 
 import javax.annotation.Nullable;
@@ -339,7 +339,7 @@ public abstract class WarState {
     public void failTerritorialDefence() {
         for (WarHexagon hexagon : this.territories()) {
             AssaultRuntime assault = AncapWars.assaults().assault(hexagon.code());
-            if (assault.type() != AssaultRuntimeType.PEACE) AncapWars.assaults().breakCastle(assault.barrier(), assault.attacker(), assault);
+            if (assault.status().politicalState() != AssaultStatus.PoliticalState.PEACE) AncapWars.assaults().breakCastle(assault.barrier(), assault.attacker(), assault);
             if (AncapWars.fieldConflicts().atFieldConflict(hexagon.code())) AncapWars.fieldConflicts().occupy(hexagon.code());
         }
     }

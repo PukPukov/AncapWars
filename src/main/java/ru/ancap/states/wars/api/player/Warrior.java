@@ -36,7 +36,7 @@ import ru.ancap.states.wars.api.war.WarData;
 import ru.ancap.states.wars.debug.Debugger;
 import ru.ancap.states.wars.id.WarID;
 import ru.ancap.states.wars.plugin.executor.exception.*;
-import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
+import ru.ancap.states.wars.plugin.listener.AssaultStatus;
 import ru.ancap.states.wars.utils.NPathDatabase;
 
 import javax.naming.InvalidNameException;
@@ -218,7 +218,7 @@ public class Warrior {
             NotEnoughMoneyException,
             PenaltyException {
         if (!this.hasAssistantPerms()) throw new NoPermissionException();
-        if (AncapWars.assaults().assault(this.getHexagon().code()).type() != AssaultRuntimeType.PEACE) throw new AttackAttackedHexagonException();
+        if (AncapWars.assaults().assault(this.getHexagon().code()).status().politicalState() != AssaultStatus.PoliticalState.PEACE) throw new AttackAttackedHexagonException();
         Barrier barrier = this.getWarHexagon().barrier();
         if (barrier == null) throw new NotFoundException();
         WarState warState = this.state();
