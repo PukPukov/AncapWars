@@ -22,7 +22,7 @@ import ru.ancap.states.wars.papi.LAPIPAPI;
 import ru.ancap.states.wars.plugin.WarMap;
 import ru.ancap.states.wars.plugin.config.WarConfig;
 import ru.ancap.states.wars.plugin.executor.executors.*;
-import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
+import ru.ancap.states.wars.plugin.listener.AssaultStatus;
 import ru.ancap.states.wars.plugin.listener.AttackCounter;
 import ru.ancap.states.wars.plugin.listener.BridgeListener;
 import ru.ancap.states.wars.plugin.listener.WarListener;
@@ -61,19 +61,31 @@ public class AncapWars extends AncapPlugin {
     }
 
     public static boolean isUnstable(Hexagon hexagon) {
-        AssaultRuntimeType assaultTime = assaults().assault(hexagon.code()).type();
-        if (assaultTime != AssaultRuntimeType.PEACE) return true;
+        AssaultStatus assaultStatus = assaults().assault(hexagon.code()).status();
+        if (assaultStatus.politicalState() != AssaultStatus.PoliticalState.PEACE) return true;
         if (fieldConflicts.atFieldConflict(hexagon.code())) return true;
         return false;
+    }
+    
+    public static boolean battleGameplayModificationIn(Hexagon hexagon) {
+        return isAtWar(hexagon) || WarConfig.loaded().globalBattle();
     }
 
     public static boolean isAtWar(Hexagon hexagon) {
-        AssaultRuntimeType assaultTime = assaults().assault(hexagon.code()).type();
-        if (assaultTime == AssaultRuntimeType.WAR) return true;
+        AssaultStatus assaultStatus = assaults().assault(hexagon.code()).status();
+        if (assaultStatus.politicalState() == AssaultStatus.PoliticalState.BATTLE) return true;
         if (fieldConflicts.atFieldConflict(hexagon.code())) return true;
         return false;
     }
-
+    
+    public static boolean protect(long hexagonCode) {
+        return !fieldConflicts().atFieldConflict(hexagonCode) && !AncapWars.issueBattleGameplayChanges(assaults().assault(hexagonCode).status());
+    }
+    
+    public static boolean issueBattleGameplayChanges(AssaultStatus status) {
+        return status.politicalState() == AssaultStatus.PoliticalState.BATTLE || WarConfig.loaded().globalBattle();
+    }
+    
     @Override
     public void onEnable() {
         super.onEnable();

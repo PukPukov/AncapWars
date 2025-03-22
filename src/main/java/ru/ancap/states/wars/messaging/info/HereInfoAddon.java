@@ -15,7 +15,7 @@ import ru.ancap.states.wars.api.hexagon.WarHexagon;
 import ru.ancap.states.wars.api.state.CityState;
 import ru.ancap.states.wars.api.war.AssaultOperator;
 import ru.ancap.states.wars.plugin.listener.AssaultRuntime;
-import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
+import ru.ancap.states.wars.plugin.listener.AssaultStatus;
 
 import java.util.ArrayList;
 
@@ -32,12 +32,12 @@ public class HereInfoAddon {
                 add(new InfoMessage.Value("hexagon-location", new Message(hexagon.getReadableHexagonCoordinates())));
                 add(new InfoMessage.Value("hexagon-code", new Message(hexagon.code())));
                 AssaultRuntime runtime = HereInfoAddon.this.assaultOperator.assault(hexagon.code());
-                AssaultRuntimeType runtimeType = runtime.type();
-                if (runtimeType == AssaultRuntimeType.PREPARE || runtimeType == AssaultRuntimeType.WAR) {
-                    add(new InfoMessage.Value("assault-status", switch (runtimeType) {
+                AssaultStatus.PoliticalState politicalState = runtime.status().politicalState();
+                if (politicalState == AssaultStatus.PoliticalState.PREPARE || politicalState == AssaultStatus.PoliticalState.BATTLE) {
+                    add(new InfoMessage.Value("assault-status", switch (politicalState) {
                         case PREPARE -> new LAPIMessage(AncapWars.class, "assault.status.prepare");
-                        case WAR -> new LAPIMessage(AncapWars.class, "assault.status.war");
-                        default -> throw new IllegalStateException("Unexpected value: " + runtimeType);
+                        case BATTLE -> new LAPIMessage(AncapWars.class, "assault.status.war");
+                        default -> throw new IllegalStateException("Unexpected value: " + politicalState);
                     }));
                     add(new InfoMessage.Value("attacker", new Message(runtime.attacker().name())));
                 }

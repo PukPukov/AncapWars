@@ -10,7 +10,7 @@ import ru.ancap.framework.database.nosql.PathDatabase;
 import ru.ancap.states.wars.AncapWars;
 import ru.ancap.states.wars.api.state.WarState;
 import ru.ancap.states.wars.id.WarID;
-import ru.ancap.states.wars.plugin.listener.AssaultRuntimeType;
+import ru.ancap.states.wars.plugin.listener.AssaultStatus;
 
 import java.util.List;
 import java.util.Objects;
@@ -99,7 +99,7 @@ public class War {
     public void prepareToEnd() {
         for (WarView view : this.sides()) view.state().cancelPeaceRequests(this.id);
         AncapWars.assaults().findAssaultRuntimesOf(this).forEach(runtime -> {
-            if (runtime.type() == AssaultRuntimeType.WAR) new AssaultEndEvent(AssaultEndEvent.Reason.PEACE, runtime).callEvent();
+            if (runtime.status().politicalState() == AssaultStatus.PoliticalState.BATTLE) new AssaultEndEvent(AssaultEndEvent.Reason.PEACE, runtime).callEvent();
         });
     }
 

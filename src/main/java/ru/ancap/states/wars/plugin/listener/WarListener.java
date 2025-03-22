@@ -119,14 +119,11 @@ public class WarListener implements Listener {
     private final Consumer<Player> onHeartbeatAction = player -> {
         if (player.isDead()) return;
         Warrior warrior = Warrior.get(player);
-        if (WarConfig.loaded().globalBattle()) this.battleMonitor().accept(player);
         
         Bukkit.getScheduler().runTask(Artifex.PLUGIN(), () -> this.stepbackMaster().ensureOuter(
             player,
-            location -> {
-                return this.assaults().assault(Codeficator.hexagon(location)).type() != AssaultRuntimeType.PREPARE ||
-                    warrior.canInteract(location);
-                },
+            location -> this.assaults().assault(Codeficator.hexagon(location)).status().politicalState() != AssaultStatus.PoliticalState.PREPARE ||
+                warrior.canInteract(location),
             () -> {
                 Communicator.of(player).message(new LAPIMessage(AncapWars.class, "leave-prepared-hexagon"));
                 Bukkit.getScheduler().runTask(AncapWars.loaded(), () -> {
@@ -140,12 +137,13 @@ public class WarListener implements Listener {
         Hexagon hexagon = AncapStates.grid.hexagon(new Point(player.getLocation().getX(), player.getLocation().getZ()));
         long code = hexagon.code();
         WarHexagon warHexagon = new WarHexagon(code);
-        AssaultRuntimeType type = this.assaults().assault(code).type();
+        AssaultStatus status = this.assaults().assault(code).status();
+        if (AncapWars.issueBattleGameplayChanges(status)) this.battleMonitor().accept(player);
 
         Material material;
 
-        switch (type) {
-            case WAR -> {
+        switch (status.politicalState()) {
+            case BATTLE -> {
                 boolean continue_ = BedrockIntegration.bcheck(player);
                 if (continue_) {
                     AssaultRuntime runtime = this.assaults().assault(code);
@@ -158,7 +156,6 @@ public class WarListener implements Listener {
                         BossBar.Overlay.NOTCHED_6
                     ));
                     player.sendActionBar(Component.text("Сердце замка находится в "+PrecisionFormatter.format(player.getLocation().distance(runtime.barrier().location()), 2)+" блоках"));
-                    if (!WarConfig.loaded().globalBattle()) this.battleMonitor().accept(player);
                 }
             } default -> BossBars.hide(player, 1);
         }
@@ -191,7 +188,7 @@ public class WarListener implements Listener {
     public void on(BlockPlaceEvent event) {
         Location location = event.getBlock().getLocation();
         long code = this.grid().hexagon(new Point(location.getX(), location.getZ())).code();
-        if (this.assaults.assault(code).type() == AssaultRuntimeType.WAR) {
+        if (AncapWars.issueBattleGameplayChanges(this.assaults.assault(code).status())) {
             if (location.getBlockY() > WarConfig.loaded().maxCastleHeight()) {
                 event.setCancelled(true);
             }
@@ -212,9 +209,7 @@ public class WarListener implements Listener {
         if (event.consumed()) return;
         for (Location location : event.locations()) {
             long code = AncapStates.grid.hexagon(location).code();
-            if (!this.field.atFieldConflict(code) && this.assaults.assault(code).type() != AssaultRuntimeType.WAR) {
-                return;
-            }
+            if (AncapWars.protect(code)) return;
         }
         event.consume();
     }
@@ -224,7 +219,7 @@ public class WarListener implements Listener {
         if (event.consumed()) return;
         for (Location location : event.passive()) {
             long code = AncapStates.grid.hexagon(location).code();
-            if (this.field.atFieldConflict(code) || this.assaults.assault(code).type() == AssaultRuntimeType.WAR) {
+            if (!AncapWars.protect(code)) {
                 event.consume();
             }
         }
@@ -234,7 +229,7 @@ public class WarListener implements Listener {
     public void on(PVPEvent event) {
         for (Player player : event.attacked()) {
             long code = AncapStates.grid.hexagon(player.getLocation()).code();
-            if (AncapWars.isAtWar(AncapStates.grid.hexagon(code))) {
+            if (!AncapWars.protect(code)) {
                 event.consume();
                 break;
             }
@@ -252,7 +247,7 @@ public class WarListener implements Listener {
     }
     
     private void operateExplode(Location location, Cancellable event) {
-        if (AncapWars.isAtWar(AncapStates.grid.hexagon(location))) {
+        if (AncapWars.battleGameplayModificationIn(AncapStates.grid.hexagon(location))) {
             event.setCancelled(false);
         }
     }
@@ -303,7 +298,7 @@ public class WarListener implements Listener {
         
         WarHexagon hexagon = event.getBarrier().hexagon();
         hexagon.devastate(event.getBarrier().location());
-        if (this.assaults().assault(hexagon.code()).type() != AssaultRuntimeType.PEACE) this.assaults().setPeace(hexagon.code());
+        if (this.assaults().assault(hexagon.code()).status().politicalState() != AssaultStatus.PoliticalState.PEACE) this.assaults().setPeace(hexagon.code());
         event.getBarrier().delete();
     }
 
@@ -409,7 +404,9 @@ public class WarListener implements Listener {
     
     @EventHandler
     public void on(PlayerItemDamageEvent event) {
-        if (AncapWars.isAtWar(AncapStates.grid.hexagon(event.getPlayer()))) event.setDamage(event.getDamage() * 5);
+        if (AncapWars.battleGameplayModificationIn(AncapStates.grid.hexagon(event.getPlayer()))) {
+            event.setDamage(event.getDamage() * 5);
+        }
     }
     
 }
