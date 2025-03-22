@@ -7,10 +7,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import ru.ancap.states.wars.war.process.restriction.tester.item.*;
-import ru.ancap.states.wars.war.process.restriction.tester.potion.PotionAllowance;
-import ru.ancap.states.wars.war.process.restriction.tester.potion.PotionEffectTester;
+import ru.ancap.states.wars.war.process.restriction.safer.item.EnchantmentSafer;
+import ru.ancap.states.wars.war.process.restriction.safer.item.ItemBanner;
+import ru.ancap.states.wars.war.process.restriction.safer.item.ItemStackSafer;
+import ru.ancap.states.wars.war.process.restriction.safer.item.PotionTester;
+import ru.ancap.states.wars.war.process.restriction.safer.potion.PotionAllowance;
+import ru.ancap.states.wars.war.process.restriction.safer.potion.PotionEffectTester;
 
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -20,13 +24,12 @@ public class BattleMonitor implements Consumer<Player> {
 
     private final Plugin plugin;
 
-    private final ItemStackPredicate itemsTester = new InventoryTester(
-        new EnchantmentTester(Map.of(
+    private final List<ItemStackSafer> safers = List.of(
+        new EnchantmentSafer(Map.of(
             Enchantment.RIPTIDE, 3,
             Enchantment.CHANNELING, 1
         )),
-        new ImbalanceItemsTester(),
-        new HelmetTester(),
+        new ItemBanner(),
         new PotionTester(PotionEffectType.INSTANT_HEALTH)
     );
 
@@ -40,7 +43,7 @@ public class BattleMonitor implements Consumer<Player> {
     @Override
     public void accept(Player player) {
         Bukkit.getScheduler().runTask(this.plugin, new PlayerGameplayRestriction(
-            this.itemsTester,
+            this.safers,
             this.effectsTester,
             player
         ));

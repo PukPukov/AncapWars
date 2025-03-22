@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.war.process.restriction.tester.item;
+package ru.ancap.states.wars.war.process.restriction.safer.item;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +12,7 @@ import java.util.List;
  * Запрещает все зелья, кроме зелий из вайтлиста и зелий без эффектов
  */
 @AllArgsConstructor
-public class PotionTester implements ItemStackPredicate {
+public class PotionTester implements ItemStackSafer {
 
     private final List<PotionEffectType> whitelist;
 
@@ -21,14 +21,15 @@ public class PotionTester implements ItemStackPredicate {
     }
 
     @Override
-    public boolean test(ItemStack itemStack) {
+    public ItemStack safe(ItemStack itemStack) {
         ItemMeta itemMeta = itemStack.getItemMeta();
-        if (itemMeta == null) return true;
-        if (!(itemMeta instanceof PotionMeta meta)) return true;
-        if (!meta.getCustomEffects().isEmpty()) return false;
-        PotionEffectType effectType = meta.getBasePotionData().getType().getEffectType();
-        if (effectType == null || whitelist.contains(effectType)) return true;
-        return false;
+        if (itemMeta == null) return itemStack;
+        if (!(itemMeta instanceof PotionMeta meta)) return itemStack;
+        if (meta.hasCustomEffects()) return null;
+        if (!meta.hasBasePotionType()) return itemStack;
+        PotionEffectType effectType = meta.getBasePotionType().getEffectType();
+        if (effectType == null || whitelist.contains(effectType)) return itemStack;
+        else return null;
     }
 
 }

@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.war.process.restriction.tester.item;
+package ru.ancap.states.wars.war.process.restriction.safer.item;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -14,19 +14,24 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Accessors(fluent = true) @Getter
 @ToString @EqualsAndHashCode
-public class EnchantmentTester implements ItemStackPredicate {
+public class EnchantmentSafer implements ItemStackSafer {
 
     private final Map<Enchantment, Integer> allowedEnchantments;
     
     @Override
-    public boolean test(ItemStack itemStack) {
+    public ItemStack safe(ItemStack itemStack) {
         Map<Enchantment, Integer> enchantments = itemStack.getEnchantments();
         for (var entry : enchantments.entrySet()) {
             @Nullable Integer allowState = this.allowedEnchantments.get(entry.getKey());
-            if (allowState == null) return false;
-            if (allowState < entry.getValue()) return false;
+            if (allowState == null) {
+                itemStack.removeEnchantment(entry.getKey());
+            }
+            else if (allowState < entry.getValue()) {
+                itemStack.removeEnchantment(entry.getKey());
+                itemStack.addEnchantment(entry.getKey(), allowState);
+            }
         }
-        return true;
+        return itemStack;
     }
 
 }
