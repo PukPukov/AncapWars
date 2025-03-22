@@ -5,7 +5,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import ru.ancap.states.wars.war.process.restriction.tester.item.ItemStackPredicate;
+import ru.ancap.states.wars.war.process.restriction.safer.item.ItemStackSafer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.function.Predicate;
 @AllArgsConstructor
 public class PlayerGameplayRestriction implements Runnable {
     
-    private final ItemStackPredicate itemStackTester;
+    private final List<ItemStackSafer> safers;
     private final Predicate<PotionEffect> potionEffectTester;
     
     private final Player restricted;
@@ -35,8 +35,14 @@ public class PlayerGameplayRestriction implements Runnable {
     
     private ItemStack[] safe(ItemStack[] contents) {
         return Arrays.stream(contents)
-            .filter(this.itemStackTester)
-            .toList().toArray(new ItemStack[0]);
+            .map(itemStack -> {
+                for (var safer : this.safers) {
+                    if (itemStack == null) return null; // need to place it in loop so subsequent safers wouldnt crash after null return
+                    itemStack = safer.safe(itemStack);
+                }
+                return itemStack;
+            })
+            .toArray(ItemStack[]::new);
     }
     
 }

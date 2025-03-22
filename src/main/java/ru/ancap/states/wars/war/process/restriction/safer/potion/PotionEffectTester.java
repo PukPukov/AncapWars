@@ -1,4 +1,4 @@
-package ru.ancap.states.wars.war.process.restriction.tester.potion;
+package ru.ancap.states.wars.war.process.restriction.safer.potion;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.potion.PotionEffect;
