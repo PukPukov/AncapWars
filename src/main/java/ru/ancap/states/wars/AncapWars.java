@@ -67,8 +67,12 @@ public class AncapWars extends AncapPlugin {
         return false;
     }
     
-    public static boolean battleGameplayModificationIn(Hexagon hexagon) {
+    public static boolean level0BattleGameplayModificationsIn(Hexagon hexagon) {
         return isAtWar(hexagon) || WarConfig.loaded().globalBattle();
+    }
+    
+    public static boolean level1BattleGameplayModificationsIn(AssaultStatus status) {
+        return status.politicalState() == AssaultStatus.PoliticalState.BATTLE || WarConfig.loaded().globalBattle();
     }
 
     public static boolean isAtWar(Hexagon hexagon) {
@@ -79,11 +83,7 @@ public class AncapWars extends AncapPlugin {
     }
     
     public static boolean protect(long hexagonCode) {
-        return !fieldConflicts().atFieldConflict(hexagonCode) && !AncapWars.issueBattleGameplayChanges(assaults().assault(hexagonCode).status());
-    }
-    
-    public static boolean issueBattleGameplayChanges(AssaultStatus status) {
-        return status.politicalState() == AssaultStatus.PoliticalState.BATTLE || WarConfig.loaded().globalBattle();
+        return !fieldConflicts().atFieldConflict(hexagonCode) && !AncapWars.level1BattleGameplayModificationsIn(assaults().assault(hexagonCode).status());
     }
     
     @Override

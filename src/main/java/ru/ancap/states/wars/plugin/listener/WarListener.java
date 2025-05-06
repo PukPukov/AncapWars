@@ -138,7 +138,7 @@ public class WarListener implements Listener {
         long code = hexagon.code();
         WarHexagon warHexagon = new WarHexagon(code);
         AssaultStatus status = this.assaults().assault(code).status();
-        if (AncapWars.issueBattleGameplayChanges(status)) this.battleMonitor().accept(player);
+        if (AncapWars.level1BattleGameplayModificationsIn(status)) this.battleMonitor().accept(player);
 
         Material material;
 
@@ -188,7 +188,7 @@ public class WarListener implements Listener {
     public void on(BlockPlaceEvent event) {
         Location location = event.getBlock().getLocation();
         long code = this.grid().hexagon(new Point(location.getX(), location.getZ())).code();
-        if (AncapWars.issueBattleGameplayChanges(this.assaults.assault(code).status())) {
+        if (AncapWars.level1BattleGameplayModificationsIn(this.assaults.assault(code).status())) {
             if (location.getBlockY() > WarConfig.loaded().maxCastleHeight()) {
                 event.setCancelled(true);
             }
@@ -247,7 +247,7 @@ public class WarListener implements Listener {
     }
     
     private void operateExplode(Location location, Cancellable event) {
-        if (AncapWars.battleGameplayModificationIn(AncapStates.grid.hexagon(location))) {
+        if (AncapWars.level0BattleGameplayModificationsIn(AncapStates.grid.hexagon(location))) {
             event.setCancelled(false);
         }
     }
@@ -404,7 +404,7 @@ public class WarListener implements Listener {
     
     @EventHandler
     public void on(PlayerItemDamageEvent event) {
-        if (AncapWars.battleGameplayModificationIn(AncapStates.grid.hexagon(event.getPlayer()))) {
+        if (AncapWars.level0BattleGameplayModificationsIn(AncapStates.grid.hexagon(event.getPlayer()))) {
             event.setDamage(event.getDamage() * 5);
         }
     }
