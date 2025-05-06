@@ -83,7 +83,7 @@ public class FieldConflicts {
         return list;
     }
     
-    public Set<WarHexagon> getFieldConflicts() {
+    public Set<WarHexagon> hexagons() {
         this.lock.readLock().lock();
         try     { return this.conflictMap.keySet().stream()
                       .map(WarHexagon::new)
