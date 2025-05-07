@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.experimental.Accessors;
+import lombok.experimental.Delegate;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.sound.Sound;
@@ -87,6 +88,7 @@ import java.util.function.Consumer;
 public class WarListener implements Listener {
 
     private final AncapHexagonalGrid grid;
+    @Delegate
     private final AssaultExecutor assaults;
     private final FieldConflicts field;
     private final BattleMonitor battleMonitor;
@@ -138,7 +140,7 @@ public class WarListener implements Listener {
         long code = hexagon.code();
         WarHexagon warHexagon = new WarHexagon(code);
         AssaultStatus status = this.assaults().assault(code).status();
-        if (AncapWars.level1BattleGameplayModificationsIn(status)) this.battleMonitor().accept(player);
+        if (AncapWars.level1BattleGameplayModificationIn(status)) this.battleMonitor().accept(player);
 
         Material material;
 
@@ -188,7 +190,7 @@ public class WarListener implements Listener {
     public void on(BlockPlaceEvent event) {
         Location location = event.getBlock().getLocation();
         long code = this.grid().hexagon(new Point(location.getX(), location.getZ())).code();
-        if (AncapWars.level1BattleGameplayModificationsIn(this.assaults.assault(code).status())) {
+        if (AncapWars.level1BattleGameplayModificationIn(assault(code).status())) {
             if (location.getBlockY() > WarConfig.loaded().maxCastleHeight()) {
                 event.setCancelled(true);
             }
@@ -209,7 +211,7 @@ public class WarListener implements Listener {
         if (event.consumed()) return;
         for (Location location : event.locations()) {
             long code = AncapStates.grid.hexagon(location).code();
-            if (AncapWars.protect(code)) return;
+            if (!AncapWars.dropProtection(code)) return;
         }
         event.consume();
     }
@@ -219,7 +221,7 @@ public class WarListener implements Listener {
         if (event.consumed()) return;
         for (Location location : event.passive()) {
             long code = AncapStates.grid.hexagon(location).code();
-            if (!AncapWars.protect(code)) {
+            if (AncapWars.dropProtection(code)) {
                 event.consume();
             }
         }
@@ -229,7 +231,7 @@ public class WarListener implements Listener {
     public void on(PVPEvent event) {
         for (Player player : event.attacked()) {
             long code = AncapStates.grid.hexagon(player.getLocation()).code();
-            if (!AncapWars.protect(code)) {
+            if (AncapWars.dropProtection(code)) {
                 event.consume();
                 break;
             }
@@ -247,7 +249,8 @@ public class WarListener implements Listener {
     }
     
     private void operateExplode(Location location, Cancellable event) {
-        if (AncapWars.level0BattleGameplayModificationsIn(AncapStates.grid.hexagon(location))) {
+        var hexCode = AncapStates.grid.hexagon(location).code();
+        if (AncapWars.level0BattleGameplayModificationIn(hexCode, assault(hexCode).status())) {
             event.setCancelled(false);
         }
     }
@@ -404,7 +407,8 @@ public class WarListener implements Listener {
     
     @EventHandler
     public void on(PlayerItemDamageEvent event) {
-        if (AncapWars.level0BattleGameplayModificationsIn(AncapStates.grid.hexagon(event.getPlayer()))) {
+        var hexCode = AncapStates.grid.hexagon(event.getPlayer()).code();
+        if (AncapWars.level0BattleGameplayModificationIn(hexCode, assault(hexCode).status())) {
             event.setDamage(event.getDamage() * 5);
         }
     }

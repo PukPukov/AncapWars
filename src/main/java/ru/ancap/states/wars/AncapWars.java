@@ -42,8 +42,8 @@ public class AncapWars extends AncapPlugin {
     private static BukkitConversationManager conversationManager;
     private static AttackCounter             attackCounter;
     private static FieldConflicts            fieldConflicts;
-    private static BattleMonitor battleMonitor;
-    public  static WarListener                warListener;
+    private static BattleMonitor             battleMonitor;
+    public  static WarListener               warListener;
 
     public static AncapPlugin               loaded              () { return AncapWars.loaded;              }
     public static WarMap                    warMap              () { return AncapWars.warMap;              }
@@ -67,23 +67,16 @@ public class AncapWars extends AncapPlugin {
         return false;
     }
     
-    public static boolean level0BattleGameplayModificationsIn(Hexagon hexagon) {
-        return isAtWar(hexagon) || WarConfig.loaded().globalBattle();
+    public static boolean level0BattleGameplayModificationIn(long hexagonCode, AssaultStatus status) {
+        return level1BattleGameplayModificationIn(status) || AncapWars.fieldConflicts.atFieldConflict(hexagonCode);
     }
     
-    public static boolean level1BattleGameplayModificationsIn(AssaultStatus status) {
-        return status.politicalState() == AssaultStatus.PoliticalState.BATTLE || WarConfig.loaded().globalBattle();
-    }
-
-    public static boolean isAtWar(Hexagon hexagon) {
-        AssaultStatus assaultStatus = assaults().assault(hexagon.code()).status();
-        if (assaultStatus.politicalState() == AssaultStatus.PoliticalState.BATTLE) return true;
-        if (fieldConflicts.atFieldConflict(hexagon.code())) return true;
-        return false;
+    public static boolean level1BattleGameplayModificationIn(AssaultStatus status) {
+        return WarConfig.loaded().globalBattle() || status.politicalState() == AssaultStatus.PoliticalState.BATTLE;
     }
     
-    public static boolean protect(long hexagonCode) {
-        return !fieldConflicts().atFieldConflict(hexagonCode) && !AncapWars.level1BattleGameplayModificationsIn(assaults().assault(hexagonCode).status());
+    public static boolean dropProtection(long hexagonCode) {
+        return !level0BattleGameplayModificationIn(hexagonCode, assaults().assault(hexagonCode).status());
     }
     
     @Override
