@@ -1,7 +1,9 @@
 package ru.ancap.states.wars;
 
+import com.etsuni.milksplash.MilkSplash;
 import com.mrivanplays.conversations.spigot.BukkitConversationManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Utility;
 import ru.ancap.framework.communicate.modifier.Placeholder;
 import ru.ancap.framework.database.nosql.ConfigurationDatabase;
 import ru.ancap.framework.database.nosql.PathDatabase;
@@ -27,6 +29,7 @@ import ru.ancap.states.wars.plugin.listener.AttackCounter;
 import ru.ancap.states.wars.plugin.listener.BridgeListener;
 import ru.ancap.states.wars.plugin.listener.WarListener;
 import ru.ancap.states.wars.spoonfeeding.UnprotectedHexagonsNotification;
+import ru.ancap.states.wars.war.WarMilkCleanEffectProvider;
 import ru.ancap.states.wars.war.process.restriction.BattleMonitor;
 
 import java.util.List;
@@ -79,10 +82,16 @@ public class AncapWars extends AncapPlugin {
         return !level0BattleGameplayModificationIn(hexagonCode, assaults().assault(hexagonCode).status());
     }
     
+    @Utility
+    public static AssaultStatus assaultStatus(long hexagonCode) {
+        return assaults().assault(hexagonCode).status();
+    }
+    
     @Override
     public void onEnable() {
         super.onEnable();
         new WarConfig(this.configuration()).load();
+        MilkSplash.effectProvider = new WarMilkCleanEffectProvider();
         AncapWars.loaded = this;
         this.loadLocales();
         AncapWars.database = ConfigurationDatabase.builder()

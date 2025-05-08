@@ -10,7 +10,6 @@ import org.bukkit.potion.PotionEffectType;
 import ru.ancap.states.wars.war.process.restriction.safer.item.EnchantmentSafer;
 import ru.ancap.states.wars.war.process.restriction.safer.item.ItemBanner;
 import ru.ancap.states.wars.war.process.restriction.safer.item.ItemStackSafer;
-import ru.ancap.states.wars.war.process.restriction.safer.item.PotionTester;
 import ru.ancap.states.wars.war.process.restriction.safer.potion.PotionAllowance;
 import ru.ancap.states.wars.war.process.restriction.safer.potion.PotionEffectTester;
 
@@ -29,8 +28,8 @@ public class BattleMonitor implements Consumer<Player> {
             Enchantment.RIPTIDE, 3,
             Enchantment.CHANNELING, 1
         )),
-        new ItemBanner(),
-        new PotionTester(PotionEffectType.INSTANT_HEALTH)
+        new ItemBanner()//,
+        //new PotionTester(PotionEffectType.INSTANT_HEALTH)
     );
 
     private final Predicate<PotionEffect> effectsTester = new PotionEffectTester(Map.of(
@@ -44,7 +43,8 @@ public class BattleMonitor implements Consumer<Player> {
     public void accept(Player player) {
         Bukkit.getScheduler().runTask(this.plugin, new PlayerGameplayRestriction(
             this.safers,
-            this.effectsTester,
+            //this.effectsTester,
+            (__) -> true,
             player
         ));
     }
