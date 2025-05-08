@@ -12,7 +12,6 @@ import ru.ancap.framework.language.additional.LAPIMessage;
 import ru.ancap.hexagon.Hexagon;
 import ru.ancap.library.Balance;
 import ru.ancap.misc.money.exception.NotEnoughMoneyException;
-import ru.ancap.states.dynmap.DynmapDrawer;
 import ru.ancap.states.id.ID;
 import ru.ancap.states.player.AncapStatesPlayer;
 import ru.ancap.states.player.PlayerNotFoundException;
@@ -245,7 +244,6 @@ public class Warrior {
         city.create(this.player, cityName);
         territories.apply(city.getHomeHexagon()).forEach(city::addHexagon);
         city.setBalance(bigBalance);
-        DynmapDrawer.redrawDynmap();
         return new CityState(city.getID());
     }
     

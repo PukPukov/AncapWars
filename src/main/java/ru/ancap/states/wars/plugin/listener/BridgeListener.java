@@ -4,33 +4,14 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import ru.ancap.commons.debug.AncapDebug;
-import ru.ancap.states.event.events.*;
-import ru.ancap.states.wars.AncapWars;
-import ru.ancap.states.wars.api.castle.Castle;
-import ru.ancap.states.wars.api.hexagon.WarHexagon;
-import ru.ancap.states.wars.api.state.CityState;
+import ru.ancap.states.event.events.CityDeleteEvent;
+import ru.ancap.states.event.events.CityFoundEvent;
+import ru.ancap.states.event.events.NationDeleteEvent;
+import ru.ancap.states.event.events.NationFoundEvent;
 import ru.ancap.states.wars.api.state.WarState;
 import ru.ancap.states.wars.connector.StateType;
-import ru.ancap.states.wars.dynmap.WarDrawer;
 
 public class BridgeListener implements Listener {
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void on(DynmapRedrawEvent event) {
-        new Thread(() -> {
-            WarDrawer drawer = new WarDrawer();
-            for (Castle castle : AncapWars.warMap().getCastles()) {
-                drawer.drawCastle(castle);
-            }
-            for (CityState city : AncapWars.warMap().cities()) {
-                for (WarHexagon hexagon : city.territories()) {
-                    if (hexagon.devastation() instanceof WarHexagon.DevastationStatus.Devastated devastated) {
-                        drawer.drawDevastation(devastated.brokenCastleLocation());
-                    }
-                }
-            }
-        }).start();
-    }
 
     @EventHandler(priority = EventPriority.LOW)
     public void on(NationDeleteEvent event) {

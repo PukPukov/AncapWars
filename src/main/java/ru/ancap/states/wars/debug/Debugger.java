@@ -8,10 +8,7 @@ import org.bukkit.World;
 import ru.ancap.hexagon.Hexagon;
 import ru.ancap.hexagon.common.Point;
 import ru.ancap.states.AncapStates;
-import ru.ancap.states.wars.dynmap.WarDrawer;
-import ru.ancap.states.wars.utils.HexLocation;
 
-import java.util.List;
 import java.util.Random;
 
 public class Debugger {
@@ -87,10 +84,4 @@ public class Debugger {
         // Bukkit.getPlayer("PukPukov").sendMessage(msg);
     }
 
-    public static void markHexOnDynmap(List<Hexagon> toMarks) {
-        WarDrawer drawer = new WarDrawer();
-        for (Hexagon toMark : toMarks) {
-            drawer.drawSimpleMarker(HexLocation.fromHexCenter(toMark));
-        }
-    }
 }
