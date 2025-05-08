@@ -83,7 +83,6 @@ public class AncapWars extends AncapPlugin {
     public void onEnable() {
         super.onEnable();
         new WarConfig(this.configuration()).load();
-        this.notifyEnable();
         AncapWars.loaded = this;
         this.loadLocales();
         AncapWars.database = ConfigurationDatabase.builder()
@@ -133,10 +132,6 @@ public class AncapWars extends AncapPlugin {
 
     private void registerInfoAddons() {
         new HereInfoAddon(AncapWars.assaultOperator, AncapWars.fieldConflicts).make();
-    }
-
-    private void notifyEnable() {
-        
     }
 
     @Override
